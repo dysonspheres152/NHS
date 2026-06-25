@@ -3,229 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Constitution - Namboole High School</title>
+    <title>School Constitution & Rules - Namboole High School</title>
+    
+    <!-- Favicon configured to use the badge icon -->
+    <link rel="icon" type="image/jpeg" href="badge.jpeg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            line-height: 1.6;
+            color: #111111; 
+            background-color: #f8fafc;
+        }
+        header {
+            background-color: #0b2512; /* Deep Green */
+            color: #ffffff;
+            padding: 25px 40px;
+            border-bottom: 5px solid #facc15; /* Yellow Accent */
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .school-title h1 {
+            margin: 0;
+            font-size: 30px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .school-title p {
+            margin: 5px 0 0 0;
+            color: #facc15;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .logo-img {
+            width: 85px;
+            height: 85px;
+            border: 3px solid #facc15;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* --- NAVIGATION BAR FRAMEWORK --- */
+        nav {
+            background-color: #111111; /* Black Nav */
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover, nav a.active {
+            background-color: #15803d; /* Green Accent */
+            color: #facc15; /* Yellow Active Text */
+        }
+
+        /* Responsive Mobile Toggle Button Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Container & Layout */
+        .container {
+            width: 92%;
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
         
-* {
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333333;
-    background-color: #f8fafc;
-    margin: 0;
-    padding: 0;
-}
-header {
-    background-color: #0f172a; /* Deep Navy */
-    color: #ffffff;
-    padding: 20px 40px;
-    border-bottom: 4px solid #0284c7; /* Sky Blue accent */
-}
-.header-container {
-    width: 100%;
-}
-.school-title h1 {
-    margin: 0;
-    font-size: 28px;
-    letter-spacing: 0.5px;
-}
-.school-title p {
-    margin: 5px 0 0 0;
-    color: #bae6fd;
-    font-size: 14px;
-    text-transform: uppercase;
-    font-weight: 600;
-}
-nav {
-    background-color: #1e293b;
-    padding: 12px 40px;
-}
-nav a {
-    color: #f1f5f9;
-    text-decoration: none;
-    margin-right: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 6px 12px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-}
-nav a:hover, nav a.active {
-    background-color: #0284c7;
-    color: #ffffff;
-}
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 20px;
-}
-.hero {
-    background-color: #0284c7;
-    color: white;
-    padding: 60px 40px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    background-image: linear-gradient(135deg, #0f172a 0%, #0284c7 100%);
-}
-.hero h2 {
-    font-size: 32px;
-    margin: 0 0 15px 0;
-}
-.hero p {
-    font-size: 16px;
-    max-width: 700px;
-    margin: 0;
-    color: #e0f2fe;
-}
-.row {
-    width: 100%;
-    margin-bottom: 25px;
-}
-.row::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-.col-12 { width: 100%; float: left; }
-.col-8 { width: 66.66%; float: left; padding-right: 20px; }
-.col-4 { width: 33.33%; float: left; padding-left: 20px; }
-.col-6 { width: 50%; float: left; padding: 10px; }
-.col-3 { width: 25%; float: left; padding: 10px; }
+        .hero {
+            background: linear-gradient(135deg, #0b2512 0%, #15803d 100%);
+            color: white;
+            padding: 60px 50px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border-left: 8px solid #facc15;
+            box-shadow: 0 10px 25px rgba(11, 37, 18, 0.15);
+        }
+        .hero h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+            color: #facc15;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 16px;
+            max-width: 800px;
+            color: #e2e8f0;
+            font-weight: 300;
+        }
 
-.card {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 6px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-    border-top: 4px solid #0f172a;
-    margin-bottom: 20px;
-}
-.card.accent {
-    border-top-color: #0284c7;
-}
-.card h3 {
-    margin-top: 0;
-    color: #0f172a;
-    font-size: 20px;
-    border-bottom: 2px solid #f1f5f9;
-    padding-bottom: 10px;
-}
-.btn {
-    display: inline-block;
-    background-color: #0284c7;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-}
-.btn:hover {
-    background-color: #0369a1;
-}
-.btn-secondary {
-    background-color: #475569;
-}
-.btn-secondary:hover {
-    background-color: #334155;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    background: #ffffff;
-}
-table th {
-    background-color: #0f172a;
-    color: white;
-    text-align: left;
-    padding: 12px;
-    font-size: 14px;
-}
-table td {
-    padding: 12px;
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 14px;
-}
-table tr:nth-child(even) {
-    background-color: #f8fafc;
-}
-.badge {
-    background-color: #f59e0b;
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
-}
-.badge-success { background-color: #10b981; }
-.badge-info { background-color: #3b82f6; }
+        .main-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border-top: 4px solid #111111;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+        .card.accent {
+            border-top-color: #15803d;
+        }
+        .card h3 {
+            margin-bottom: 20px;
+            color: #0b2512;
+            font-size: 24px;
+            border-bottom: 2px solid #facc15;
+            padding-bottom: 10px;
+            font-weight: 600;
+        }
+        .card p {
+            color: #334155;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
 
-footer {
-    background-color: #0f172a;
-    color: #94a3b8;
-    padding: 40px 20px;
-    text-align: center;
-    font-size: 14px;
-    margin-top: 50px;
-    border-top: 4px solid #0284c7;
-}
-footer p { margin: 5px 0; }
-footer a { color: #38bdf8; text-decoration: none; }
+        .rules-list {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+        .rules-list li {
+            margin-bottom: 18px;
+            padding-left: 30px;
+            position: relative;
+            font-size: 15px;
+            color: #334155;
+        }
+        .rules-list li::before {
+            content: "⚖️";
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 16px;
+        }
+        .rules-list strong {
+            color: #0b2512;
+            display: block;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
 
-.form-group {
-    margin-bottom: 15px;
-}
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    font-size: 14px;
-}
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    font-size: 14px;
-}
-textarea.form-control {
-    height: 120px;
-    resize: vertical;
-}
-.img-placeholder {
-    background-color: #e2e8f0;
-    color: #64748b;
-    width: 100%;
-    height: 180px;
-    line-height: 180px;
-    text-align: center;
-    font-weight: 600;
-    border-radius: 4px;
-    margin-bottom: 15px;
-}
-.list-unstyled {
-    list-style: none;
-    padding-left: 0;
-}
-.list-unstyled li {
-    margin-bottom: 10px;
-    position: relative;
-    padding-left: 15px;
-}
-.list-unstyled li::before {
-    content: "•";
-    color: #0284c7;
-    font-weight: bold;
-    position: absolute;
-    left: 0;
-}
+        /* Sidebar info panels */
+        .info-panel {
+            background-color: #0f172a;
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 5px solid #facc15;
+            margin-bottom: 30px;
+        }
+        .info-panel h4 {
+            color: #facc15;
+            font-size: 18px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info-panel p {
+            color: #cbd5e1;
+            font-size: 14px;
+            line-height: 1.6;
+        }
 
+        /* --- ADMIN SECTIONS & CONTROLS --- */
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #111111;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #15803d;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #15803d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0b2512;
+            color: #facc15;
+        }
+
+        footer {
+            background-color: #111111;
+            color: #94a3b8;
+            padding: 60px 20px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 60px;
+            border-top: 5px solid #15803d;
+        }
+        footer h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        footer p {
+            max-width: 700px;
+            margin: 0 auto 10px auto;
+            line-height: 1.7;
+        }
+        footer a { color: #facc15; text-decoration: none; }
+
+        /* --- RESPONSIVE MOBILE VIEWPORTS --- */
+        @media(max-width: 992px){
+            .main-layout { 
+                grid-template-columns: 1fr; 
+            }
+            .hero { 
+                padding: 50px 30px; 
+            }
+            .hero h2 { 
+                font-size: 32px; 
+            }
+            header {
+                padding: 20px;
+            }
+            .school-title h1 {
+                font-size: 24px;
+            }
+            
+            /* Mobile Navigation Menu Drawer */
+            .menu-toggle {
+                display: flex;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: #111111;
+                padding: 20px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+                border-bottom: 4px solid #15803d;
+                gap: 10px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            nav a {
+                width: 100%;
+                text-align: left;
+                padding: 12px 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -234,82 +341,266 @@ textarea.form-control {
     <div class="header-container">
         <div class="school-title">
             <h1>NAMBOOLE HIGH SCHOOL</h1>
-            <p>Discipline, Excellence, and Leadership</p>
+            <p>Aspire to Inspire</p>
         </div>
+        <img src="badge.jpeg" alt="Namboole High School Badge" class="logo-img" onerror="this.style.display='none';">
     </div>
 </header>
 
 <nav>
-    <a href="index.html">Home & About</a>
-<a href="admissions.html">Admissions</a>
-<a href="co-curricular.html">Co-Curricular</a>
-<a href="gallery.html">Gallery & Events</a>
-<a href="contact.html">Contact Us</a>
-<a href="constitution.html" class="active">Constitution</a>
-<a href="past-papers.html">Past Papers</a>
-
+    <div class="nav-container">
+        <!-- Interactive Hamburger Lines -->
+        <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links" id="nav-menu-links">
+            <a href="index.html">Home & About</a>
+            <a href="admissions.html">Admissions</a>
+            <a href="co-curricular.html">Events</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="constitution.html" class="active">Constitution</a>
+            <a href="past-papers.html">Past Papers</a>
+        </div>
+    </div>
 </nav>
 
 <div class="container">
     
-<div class="hero" style="background-image: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);">
-    <h2>School Rules and General Constitution</h2>
-    <p>The code of ethics, structural operational frameworks, and foundational regulations governing the behavior of all members within Namboole High School.</p>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <h3>Preamble & Foundational Ethics</h3>
-            <p>This constitution is established to maintain an orderly, progressive, and highly academic environment at Namboole High School. It is intended to guide students, staff, and institutional managers toward absolute self-discipline, safety, and mutual respect.</p>
-        </div>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h2>School Constitution & Code of Conduct</h2>
+        <p>Guiding our student body through structured discipline, core ethical standard frameworks, and mutual respect to ensure a peaceful learning ecosystem.</p>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-8">
-        <div class="card accent">
-            <h3>Article I: General Conduct and Discipline</h3>
-            <p><strong>Section 1.1: Respect and Obedience</strong><br>Every student must exhibit absolute respect to school leadership, academic faculty, auxiliary staff, and fellow students. Insubordination or derogatory language will attract strict administrative actions.</p>
-            <p><strong>Section 1.2: General Campus Uniform Code</strong><br>Students must appear smart and wear full, specified school uniforms during standard academic hours, travel times, and public functions. Alterations to uniform styles are strictly prohibited.</p>
-            <p><strong>Section 1.3: Absolute Punctuality</strong><br>Punctual attendance is mandatory for morning assemblies, classroom lessons, prep hours, sports routines, and institutional gatherings. Latecomers will receive corrective manual labor exercises.</p>
-        </div>
+    <!-- Layout Grid Split -->
+    <div class="main-layout">
+        
+        <!-- Left Column: Constitution Items & Amendments -->
+        <div class="main-content">
+            <div class="card accent">
+                <h3>General Rules & Code of Discipline</h3>
+                <p>Every student at Namboole High School is expected to represent the institution with integrity and high moral standing[cite: 4]. The following foundational statutes govern daily routines[cite: 4]:</p>
+                
+                <ul class="rules-list" id="core-static-rules-list">
+                    <li>
+                        <strong>Section 1: Academic Integrity & Punctuality</strong>
+                        All students must attend scheduled lessons, morning assemblies, and laboratory presentations on time[cite: 4]. Academic dishonesty or cheating results in immediate disciplinary review[cite: 4].
+                    </li>
+                    <li>
+                        <strong>Section 2: Dress Code and Representation</strong>
+                        The official school uniform must be clean, un-modified, and worn smartly at all times with the explicit badge visible during regular operations and regional travel[cite: 4].
+                    </li>
+                    <li>
+                        <strong>Section 3: Protection of Institutional Property</strong>
+                        Malicious damage to science equipment, dormitories, computers, or shared database hubs is strictly forbidden[cite: 4]. Compensation is required for any broken infrastructure components[cite: 4].
+                    </li>
+                    <li>
+                        <strong>Section 4: Electronic Gadget Policies</strong>
+                        Unauthorized standard smart devices or entertainment systems are strictly regulated outside specific technical instruction blocks to preserve focus within class streams[cite: 4].
+                    </li>
+                    <!-- Dynamic database-driven rules will hook in here -->
+                </ul>
+            </div>
 
-        <div class="card">
-            <h3>Article II: Prohibited Actions and Contraband</h3>
-            <p><strong>Section 2.1: Banned Electronic Gadgets</strong><br>Smartphones, radios, personal music players, and independent web devices are completely illegal on campus for students, unless explicitly requested for specialized science practical sessions by faculty.</p>
-            <p><strong>Section 2.2: Substances & Narcotics</strong><br>The possession, sharing, or use of alcohol, tobacco products, or illegal intoxicating narcotics inside institutional perimeters represents a capital offense leading to immediate expulsion.</p>
-            <p><strong>Section 2.3: Bullying and Intimidation</strong><br>Namboole High School operates a zero-tolerance policy against any form of bullying, initiation rituals, teasing, or physical fighting. Perpetrators will face instant suspension pending a disciplinary committee verdict.</p>
-        </div>
-    </div>
-    
-    <div class="col-4">
-        <div class="card accent">
-            <h3>Constitutional Downloads</h3>
-            <p>Fetch a comprehensive print copy of the student handbook containing detailed articles, bylaws, and specific penalty indexes:</p>
-            <br>
-            <a href="#" class="btn" style="width: 100%; text-align: center;">📥 Download Constitution Book (PDF)</a>
+            <!-- DYNAMIC AMENDMENTS BLOCK LINKED TO SUPABASE -->
+            <div class="card" style="border-top: 4px solid #facc15;">
+                <h3>📜 Constitutional Amendments Stream</h3>
+                <p style="font-size: 14px; color: #64748b; margin-bottom: 20px;">Live additions and regulatory alterations verified by the institutional board[cite: 4].</p>
+                <div id="amendments-target-box">
+                    <p style="color: #64748b; font-style: italic;">Synchronizing cloud records...[cite: 4]</p>
+                </div>
+            </div>
         </div>
         
-        <div class="card">
-            <h3>Disciplinary Framework</h3>
-            <p>Infractions against these rules are processed transparently via the following sequence:</p>
-            <ol style="padding-left: 20px; font-size: 13px; line-height: 1.8;">
-                <li><strong>Verbal Warning & Counseling:</strong> For primary minor rule slips.</li>
-                <li><strong>Official Written Notice:</strong> Dispatched to parents for repetitive minor errors.</li>
-                <li><strong>Disciplinary Panel Hearing:</strong> Formal defense layout facing the Board.</li>
-                <li><strong>Suspension / Expulsion:</strong> For definitive major offenses outlined under Article II.</li>
-            </ol>
-        </div>
-    </div>
-</div>
+        <!-- Right Column: Admin Panel & Metadata -->
+        <div class="sidebar">
+            <div class="info-panel">
+                <h4>Core Philosophy</h4>
+                <p>Our operational policy balances firm rules with positive reinforcement, protecting the well-being and progress of every student across all class lists[cite: 4].</p>
+            </div>
 
+            <!-- MANAGEMENT FORMS (AMENDMENTS & RULES) -->
+            <div class="card accent">
+                <h3>🛠️ Admin Control Desk</h3>
+                <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">Add new structural amendments or general .</p>
+                
+                <div class="form-group">
+                    <label>Entry Type</label>
+                    <select id="adm-type" class="form-control">
+                        <option value="rule">General Rule & Regulation</option>
+                        <option value="amendment">Constitutional Amendment</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Title / Section Header</label>
+                    <input type="text" id="adm-title" class="form-control" placeholder="e.g. Section 5: Late Coming">
+                </div>
+
+                <div class="form-group">
+                    <label>Content Framework Details</label>
+                    <textarea id="adm-content" class="form-control" rows="4" placeholder="Enter constitutional text here..." style="resize:vertical;"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Security Keyphrase</label>
+                    <input type="password" id="adm-key" class="form-control" placeholder="•••••">
+                </div>
+
+                <button class="btn" onclick="processAdminSubmission()" style="width:100%; text-align:center;">Publish to Cloud Ledger ➔</button>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 <footer>
-    <p>&copy; 2026 Namboole High School. All Rights Reserved.</p>
-    <p>P.O. Box 12345, Kampala, Uganda | Tel: +256 414 111222 | Email: info@namboolehigh.sc.ug</p>
+    <h3>Namboole High School</h3>
+    <p>&copy; 2026 Namboole High School. All Rights Reserved[cite: 4].</p>
+    <p>P.O. Box 12345, Kampala, Uganda | Tel: +256 414 111222 | Email: info@namboolehigh.sc.ug[cite: 4].</p>
 </footer>
+
+<!-- Interactive Engine Logic for Mobile Drawer and Supabase REST Requests -->
+<script>
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.getElementById('nav-menu-links');
+
+    menuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // Supabase REST Configurations[cite: 4]
+    const SUPABASE_URL = "https://uxhjulraredskkgghfav.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_oxLVKxNQJtNBo4pn6cvGuQ_1Hk56B3L";
+
+    function getHeaders() {
+        return {
+            "apikey": SUPABASE_KEY,
+            "Authorization": `Bearer ${SUPABASE_KEY}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=representation"
+        };
+    }
+
+    // Sync cloud storage instantly on startup
+    window.onload = function() {
+        pullCloudAmendments();
+        pullCloudRules();
+    };
+
+    // 1. Fetch Constitutional Amendments[cite: 4]
+    async function pullCloudAmendments() {
+        const displayBox = document.getElementById('amendments-target-box');
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/constitution_amendments?select=*&order=id.asc`, {
+                headers: getHeaders()
+            });
+            const data = await response.json();
+
+            if (!data || data.length === 0) {
+                displayBox.innerHTML = `<p style="color: #94a3b8; font-style: italic;">No active constitutional amendments uploaded to the database ledger.[cite: 4]</p>`;
+                return;
+            }
+
+            displayBox.innerHTML = data.map(item => `
+                <div style="background:#f8fafc; border-left:4px solid #facc15; padding:15px; margin-bottom:15px; border-radius:0 6px 6px 0;">
+                    <h5 style="color:#0b2512; font-size:16px; font-weight:700; margin-bottom:4px;">${escapeHtml(item.title)}</h5>
+                    <p style="color:#475569; font-size:14px; line-height:1.6; margin:0;">${escapeHtml(item.content)}</p>
+                </div>
+            `).join('');
+        } catch (err) {
+            displayBox.innerHTML = `<p style="color: #dc2626; font-size:14px;">Error connecting to cloud amendment layers.[cite: 4]</p>`;
+        }
+    }
+
+    // 2. Fetch Extra Dynamic General Rules
+    async function pullCloudRules() {
+        const rulesContainer = document.getElementById('core-static-rules-list');
+        
+        // Remove old dynamic rules elements if they exist before rebuilding
+        document.querySelectorAll('.dynamic-rule-item').forEach(el => el.remove());
+
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/school_rules?select=*&order=id.asc`, {
+                headers: getHeaders()
+            });
+            const data = await response.json();
+
+            if (data && data.length > 0) {
+                data.forEach(rule => {
+                    const li = document.createElement('li');
+                    li.className = 'dynamic-rule-item';
+                    li.innerHTML = `
+                        <strong>${escapeHtml(rule.section_title)}</strong>
+                        ${escapeHtml(rule.rule_details)}
+                    `;
+                    rulesContainer.appendChild(li);
+                });
+            }
+        } catch (err) {
+            console.error("Failed to append cloud data into core rules:", err);
+        }
+    }
+
+    // 3. Central Router for Submitting Forms[cite: 4]
+    async function processAdminSubmission() {
+        const entryType = document.getElementById('adm-type').value;
+        const title = document.getElementById('adm-title').value.trim();
+        const content = document.getElementById('adm-content').value.trim();
+        const key = document.getElementById('adm-key').value;
+
+        if (!title || !content) {
+            alert("Validation Error: Please completely fill out all text areas[cite: 4].");
+            return;
+        }
+
+        if (key !== "12345") {
+            alert("Security Denied: Invalid Administrative Credentials[cite: 4].");
+            return;
+        }
+
+        // Determine destination endpoint table resource[cite: 4]
+        const targetTable = (entryType === 'amendment') ? 'constitution_amendments' : 'school_rules';
+        
+        // Match JSON field mapping rules to specific schema properties
+        const payload = (entryType === 'amendment') 
+            ? { title: title, content: content } 
+            : { section_title: title, rule_details: content };
+
+        try {
+            const response = await fetch(`${SUPABASE_URL}/rest/v1/${targetTable}`, {
+                method: 'POST',
+                headers: getHeaders(),
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                alert(`Successfully synchronized new ${entryType} with the server![cite: 4]`);
+                
+                // Reset administrative panel input items[cite: 4]
+                document.getElementById('adm-title').value = '';
+                document.getElementById('adm-content').value = '';
+                document.getElementById('adm-key').value = '';
+                
+                // Refresh data flows
+                pullCloudAmendments();
+                pullCloudRules();
+            } else {
+                alert("Database server returned error flags during runtime communication.");
+            }
+        } catch (error) {
+            alert("Network timeout experienced across live database operations[cite: 4].");
+        }
+    }
+
+    // Standard script helper to scrub special chars safely
+    function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+</script>
 
 </body>
 </html>

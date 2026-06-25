@@ -3,229 +3,410 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery & Events - Namboole High School</title>
+    <title>Namboole High School Gallery </title>
+    
+    <link rel="icon" type="image/jpeg" href="badge.jpeg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            line-height: 1.6;
+            color: #111111;
+            background-color: #f8fafc;
+        }
+        header {
+            background-color: #0b2512; /* Deep Green */
+            color: #ffffff;
+            padding: 25px 40px;
+            border-bottom: 5px solid #facc15; /* Yellow Accent */
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .school-title h1 {
+            margin: 0;
+            font-size: 30px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .school-title p {
+            margin: 5px 0 0 0;
+            color: #facc15;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .logo-img {
+            width: 85px;
+            height: 85px;
+            border: 3px solid #facc15;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* --- STICKY NAVIGATION BAR WITH HAMPURGER LINES OVERHAUL --- */
+        nav {
+            background-color: #111111; /* Black Nav */
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover, nav a.active {
+            background-color: #15803d; /* Green Accent */
+            color: #facc15; /* Yellow Active Text */
+        }
+
+        /* Three-Bar Hamburger Toggle Icon */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
         
-* {
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333333;
-    background-color: #f8fafc;
-    margin: 0;
-    padding: 0;
-}
-header {
-    background-color: #0f172a; /* Deep Navy */
-    color: #ffffff;
-    padding: 20px 40px;
-    border-bottom: 4px solid #0284c7; /* Sky Blue accent */
-}
-.header-container {
-    width: 100%;
-}
-.school-title h1 {
-    margin: 0;
-    font-size: 28px;
-    letter-spacing: 0.5px;
-}
-.school-title p {
-    margin: 5px 0 0 0;
-    color: #bae6fd;
-    font-size: 14px;
-    text-transform: uppercase;
-    font-weight: 600;
-}
-nav {
-    background-color: #1e293b;
-    padding: 12px 40px;
-}
-nav a {
-    color: #f1f5f9;
-    text-decoration: none;
-    margin-right: 20px;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 6px 12px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-}
-nav a:hover, nav a.active {
-    background-color: #0284c7;
-    color: #ffffff;
-}
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 20px;
-}
-.hero {
-    background-color: #0284c7;
-    color: white;
-    padding: 60px 40px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    background-image: linear-gradient(135deg, #0f172a 0%, #0284c7 100%);
-}
-.hero h2 {
-    font-size: 32px;
-    margin: 0 0 15px 0;
-}
-.hero p {
-    font-size: 16px;
-    max-width: 700px;
-    margin: 0;
-    color: #e0f2fe;
-}
-.row {
-    width: 100%;
-    margin-bottom: 25px;
-}
-.row::after {
-    content: "";
-    clear: both;
-    display: table;
-}
-.col-12 { width: 100%; float: left; }
-.col-8 { width: 66.66%; float: left; padding-right: 20px; }
-.col-4 { width: 33.33%; float: left; padding-left: 20px; }
-.col-6 { width: 50%; float: left; padding: 10px; }
-.col-3 { width: 25%; float: left; padding: 10px; }
+        /* Premium Hero Component */
+        .hero {
+            background: linear-gradient(135deg, #0b2512 0%, #15803d 100%);
+            color: white;
+            padding: 60px 50px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border-left: 8px solid #facc15;
+            box-shadow: 0 10px 25px rgba(11, 37, 18, 0.15);
+        }
+        .hero h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+            color: #facc15;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 17px;
+            max-width: 800px;
+            color: #e2e8f0;
+            font-weight: 300;
+        }
 
-.card {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 6px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-    border-top: 4px solid #0f172a;
-    margin-bottom: 20px;
-}
-.card.accent {
-    border-top-color: #0284c7;
-}
-.card h3 {
-    margin-top: 0;
-    color: #0f172a;
-    font-size: 20px;
-    border-bottom: 2px solid #f1f5f9;
-    padding-bottom: 10px;
-}
-.btn {
-    display: inline-block;
-    background-color: #0284c7;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-}
-.btn:hover {
-    background-color: #0369a1;
-}
-.btn-secondary {
-    background-color: #475569;
-}
-.btn-secondary:hover {
-    background-color: #334155;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    background: #ffffff;
-}
-table th {
-    background-color: #0f172a;
-    color: white;
-    text-align: left;
-    padding: 12px;
-    font-size: 14px;
-}
-table td {
-    padding: 12px;
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 14px;
-}
-table tr:nth-child(even) {
-    background-color: #f8fafc;
-}
-.badge {
-    background-color: #f59e0b;
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: bold;
-}
-.badge-success { background-color: #10b981; }
-.badge-info { background-color: #3b82f6; }
+        /* Layout Grid System */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border-top: 4px solid #111111; /* Jet Black Top Border */
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+        .card.accent {
+            border-top-color: #15803d; /* Deep Green Accent Border */
+        }
+        .card h3 {
+            margin-bottom: 20px;
+            color: #0b2512;
+            font-size: 24px;
+            border-bottom: 2px solid #facc15;
+            padding-bottom: 10px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-footer {
-    background-color: #0f172a;
-    color: #94a3b8;
-    padding: 40px 20px;
-    text-align: center;
-    font-size: 14px;
-    margin-top: 50px;
-    border-top: 4px solid #0284c7;
-}
-footer p { margin: 5px 0; }
-footer a { color: #38bdf8; text-decoration: none; }
+        /* Dynamic Media Gallery Layout Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .gallery-item {
+            background: #f8fafc;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .gallery-img-wrapper {
+            width: 100%;
+            height: 200px;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-weight: 500;
+            overflow: hidden;
+        }
+        .gallery-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .gallery-info {
+            padding: 15px;
+        }
+        .gallery-info h4 {
+            color: #0b2512;
+            font-size: 16px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .gallery-info p {
+            font-size: 13px;
+            color: #475569;
+            margin: 0;
+            line-height: 1.5;
+        }
 
-.form-group {
-    margin-bottom: 15px;
-}
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    font-size: 14px;
-}
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    font-size: 14px;
-}
-textarea.form-control {
-    height: 120px;
-    resize: vertical;
-}
-.img-placeholder {
-    background-color: #e2e8f0;
-    color: #64748b;
-    width: 100%;
-    height: 180px;
-    line-height: 180px;
-    text-align: center;
-    font-weight: 600;
-    border-radius: 4px;
-    margin-bottom: 15px;
-}
-.list-unstyled {
-    list-style: none;
-    padding-left: 0;
-}
-.list-unstyled li {
-    margin-bottom: 10px;
-    position: relative;
-    padding-left: 15px;
-}
-.list-unstyled li::before {
-    content: "•";
-    color: #0284c7;
-    font-weight: bold;
-    position: absolute;
-    left: 0;
-}
+        /* Badges Styling */
+        .badge {
+            display: inline-block;
+            background-color: #facc15;
+            color: #111111;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .badge-success { background-color: #15803d; color: white; }
+        .badge-info { background-color: #111111; color: #facc15; }
 
+        .event-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .event-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        .event-item h4 {
+            margin: 2px 0 5px 0;
+            font-size: 15px;
+            color: #0b2512;
+        }
+        .event-item p {
+            margin: 0;
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        /* Action Buttons */
+        .btn {
+            display: inline-block;
+            background-color: #15803d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0b2512;
+            color: #facc15;
+        }
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        .btn-danger {
+            background-color: #b91c1c;
+        }
+        .btn-danger:hover {
+            background-color: #7f1d1d;
+            color: white;
+        }
+
+        /* Interactive Admin Control Panel Section */
+        .admin-zone {
+            background: #f1f5f9;
+            border: 2px dashed #15803d;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 35px;
+        }
+        .admin-zone h3 {
+            color: #0b2512;
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .form-panel {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+        }
+        .form-panel h4 {
+            margin-bottom: 15px;
+            color: #111111;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 5px;
+            font-size: 15px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #475569;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #15803d;
+        }
+
+        /* Loading Spinner */
+        .loading-placeholder {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        footer {
+            background-color: #111111;
+            color: #94a3b8;
+            padding: 60px 20px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 60px;
+            border-top: 5px solid #15803d;
+        }
+        footer h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        footer p {
+            max-width: 700px;
+            margin: 0 auto 10px auto;
+            line-height: 1.7;
+        }
+
+        /* Responsive Breakpoints & Drawer Activation */
+        @media(max-width: 992px){
+            .main-layout { grid-template-columns: 1fr; }
+            .admin-grid { grid-template-columns: 1fr; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .hero { padding: 40px 25px; }
+            .hero h2 { font-size: 30px; }
+            header { padding: 20px; }
+            .school-title h1 { font-size: 24px; }
+            
+            /* Responsive Navigation Drawer Conversion */
+            .menu-toggle { display: flex; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: #111111;
+                padding: 20px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+                border-bottom: 4px solid #15803d;
+                gap: 10px;
+            }
+            .nav-links.active { display: flex; }
+            nav a { width: 100%; text-align: left; }
+        }
     </style>
 </head>
 <body>
@@ -236,88 +417,303 @@ textarea.form-control {
             <h1>NAMBOOLE HIGH SCHOOL</h1>
             <p>Discipline, Excellence, and Leadership</p>
         </div>
+        <img src="badge.jpeg" alt="Namboole High School Badge" class="logo-img" onerror="this.style.display='none';">
     </div>
 </header>
 
 <nav>
-    <a href="index.html">Home & About</a>
-<a href="admissions.html">Admissions</a>
-<a href="co-curricular.html">Co-Curricular</a>
-<a href="gallery.html" class="active">Gallery & Events</a>
-<a href="contact.html">Contact Us</a>
-<a href="constitution.html">Constitution</a>
-<a href="past-papers.html">Past Papers</a>
-
+    <div class="nav-container">
+        <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links" id="nav-menu-links">
+            <a href="index.html">Home & About</a>
+            <a href="admissions.html">Admissions</a>
+            <a href="co-curricular.html">Events</a>
+            <a href="gallery.html" class="active">Gallery </a>
+            <a href="contact.html">Contact Us</a>
+            <a href="constitution.html">Constitution</a>
+            <a href="past-papers.html">Past Papers</a>
+        </div>
+    </div>
 </nav>
 
 <div class="container">
     
-<div class="hero" style="background-image: linear-gradient(135deg, #b45309 0%, #0f172a 100%);">
-    <h2>Gallery, News & School Events</h2>
-    <p>A panoramic digital look into our energetic community life. Follow highlights from major events, celebrations, and key operational calendars.</p>
-</div>
+    <div class="hero">
+        <h2>Live Campus Gallery & Planner</h2>
+        <p>A cloud-connected look inside Namboole High School. Follow active operational calendars, scholastic announcements, and visual event updates managed in real-time by institutional admins.</p>
+    </div>
 
-<div class="row">
-    <div class="col-8">
-        <div class="card">
-            <h3>Visual Gallery</h3>
-            <p>Take a look at captured snapshots of daily actions, milestones, and celebrations on our modern campus:</p>
-            
-            <div class="row" style="margin-bottom:0;">
-                <div class="col-6">
-                    <div class="img-placeholder" style="height: 150px; line-height: 150px;">Graduation Ceremony Picture</div>
-                    <p style="font-size: 13px; font-weight: 600; text-align: center;">Annual Speech & Prize Giving Day</p>
-                </div>
-                <div class="col-6">
-                    <div class="img-placeholder" style="height: 150px; line-height: 150px;">Inter-house Sports Day</div>
-                    <p style="font-size: 13px; font-weight: 600; text-align: center;">Athletics Competition Finals</p>
-                </div>
+    <div class="admin-zone">
+        <div id="admin-login-sec">
+            <h3>🔐 Institutional Administration Hub</h3>
+            <p style="font-size: 13px; color: #475569; margin-bottom: 10px;">Authorized administrators can manage campus announcements, gallery image records, and the terminal planner calendar updates.</p>
+            <div style="display: flex; gap: 10px; max-width: 400px;">
+                <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter Administrative Credentials Pin">
+                <button class="btn" onclick="verifyAdminGate()">Login</button>
             </div>
+            <p id="login-err" style="color: red; font-size: 12px; margin-top: 5px; display: none;">Invalid credentials pin. Try again.</p>
+        </div>
+
+        <div id="admin-dash-sec" style="display: none;">
+            <h3>🛠️ Cloud Management Control Portal <button class="btn btn-sm btn-danger" style="margin-left: auto;" onclick="logoutAdmin()">Secure Logout</button></h3>
             
-            <div class="row" style="margin-bottom:0; margin-top: 15px;">
-                <div class="col-6">
-                    <div class="img-placeholder" style="height: 150px; line-height: 150px;">MDD Festivals Stage</div>
-                    <p style="font-size: 13px; font-weight: 600; text-align: center;">Music, Dance & Drama Competitions</p>
+            <div class="admin-grid">
+                <div class="form-panel">
+                    <h4>Add Visual Gallery Image Card</h4>
+                    <form id="gallery-form" onsubmit="handleGallerySubmit(event)">
+                        <div class="form-group">
+                            <label>Event Topic Title</label>
+                            <input type="text" id="gal-title" class="form-control" required placeholder="e.g. Practical Science Exhibition">
+                        </div>
+                        <div class="form-group">
+                            <label>Description Detail</label>
+                            <input type="text" id="gal-desc" class="form-control" required placeholder="Short contextual summary...">
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Device Image Asset File</label>
+                            <input type="file" id="gal-img-file" class="form-control" accept="image/*" required>
+                        </div>
+                        <button type="submit" id="gal-btn" class="btn btn-sm" style="width:100%;">Publish Gallery Card</button>
+                    </form>
                 </div>
-                <div class="col-6">
-                    <div class="img-placeholder" style="height: 150px; line-height: 150px;">Science Lab Sessions</div>
-                    <p style="font-size: 13px; font-weight: 600; text-align: center;">Practical Chemistry Lab Experiments</p>
+
+                <div class="form-panel">
+                    <h4>Publish School Planner Calendar Event</h4>
+                    <form id="event-form" onsubmit="handleEventSubmit(event)">
+                        <div class="form-group">
+                            <label>Date Label Badge</label>
+                            <input type="text" id="ev-date" class="form-control" required placeholder="e.g. OCT 24 or TERM 3">
+                        </div>
+                        <div class="form-group">
+                            <label>Event Name</label>
+                            <input type="text" id="ev-title" class="form-control" required placeholder="e.g. Annual Sports Gala">
+                        </div>
+                        <div class="form-group">
+                            <label>Contextual Details</label>
+                            <input type="text" id="ev-desc" class="form-control" required placeholder="Brief reporting instructions or times...">
+                        </div>
+                        <div class="form-group">
+                            <label>Badge Styling Type</label>
+                            <select id="ev-badge-type" class="form-control">
+                                <option value="badge-info">Standard Black Badge</option>
+                                <option value="badge-success">Success Green Badge</option>
+                                <option value="">Accent Yellow Badge</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="ev-btn" class="btn btn-sm" style="width:100%;">Add onto Planner</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    
-    <div class="col-4">
-        <div class="card accent">
-            <h3>Upcoming Events Calendar</h3>
-            
-            <div style="margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0;">
-                <span class="badge badge-info">JULY 10</span>
-                <h4 style="margin: 5px 0 2px 0; font-size: 15px;">Mid-Term Visitation Day</h4>
-                <p style="margin:0; font-size: 13px; color: #475569;">Parents are invited to review student educational files and interact with faculty.</p>
-            </div>
-            
-            <div style="margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0;">
-                <span class="badge badge-info">AUG 02</span>
-                <h4 style="margin: 5px 0 2px 0; font-size: 15px;">Inter-House Music Finals</h4>
-                <p style="margin:0; font-size: 13px; color: #475569;">An afternoon celebrating local instrumentation and original theatrical writing.</p>
-            </div>
-            
-            <div style="margin-bottom: 5px;">
-                <span class="badge badge-success">SEPT 05</span>
-                <h4 style="margin: 5px 0 2px 0; font-size: 15px;">Term 3 Opening Date</h4>
-                <p style="margin:0; font-size: 13px; color: #475569;">All residential students must report by 4:00 PM with appropriate document clearances.</p>
+
+    <div class="main-layout">
+        
+        <div class="main-content">
+            <div class="card accent">
+                <h3>Visual Campus Gallery</h3>
+                <p>Captured snapshots showcasing modern campus life milestones, sports actions, and laboratory interactions at Namboole High School:</p>
+                
+                <div class="gallery-grid" id="live-gallery-container">
+                    <div class="loading-placeholder">Connecting to Supabase Database...</div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+        
+        <div class="sidebar">
+            <div class="card">
+                <h3>Upcoming Events Calendar</h3>
+                <div id="live-events-container">
+                    <div class="loading-placeholder">Syncing schedule matrix...</div>
+                </div>
+            </div>
+        </div>
 
+    </div>
 </div>
 
 <footer>
+    <h3>Namboole High School</h3>
     <p>&copy; 2026 Namboole High School. All Rights Reserved.</p>
     <p>P.O. Box 12345, Kampala, Uganda | Tel: +256 414 111222 | Email: info@namboolehigh.sc.ug</p>
 </footer>
+
+<script>
+    // 1. Initialize Supabase Client with User Project Keys
+    const SUPABASE_URL = "https://uxhjulraredskkgghfav.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_oxLVKxNQJtNBo4pn6cvGuQ_1Hk56B3L";
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Three-Bar Hamburger Mobile Toggle Mechanism
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.getElementById('nav-menu-links');
+    menuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // App Initialization Lifecycle Hook
+    document.addEventListener("DOMContentLoaded", () => {
+        fetchGallery();
+        fetchEvents();
+        
+        if(sessionStorage.getItem("adminActive") === "true") {
+            document.getElementById("admin-login-sec").style.display = "none";
+            document.getElementById("admin-dash-sec").style.display = "block";
+        }
+    });
+
+    // Admin Access Gateway Control
+    function verifyAdminGate() {
+        const pin = document.getElementById("admin-pass-input").value;
+        if(pin === "12345") {
+            document.getElementById("login-err").style.display = "none";
+            document.getElementById("admin-login-sec").style.display = "none";
+            document.getElementById("admin-dash-sec").style.display = "block";
+            sessionStorage.setItem("adminActive", "true");
+        } else {
+            document.getElementById("login-err").style.display = "block";
+        }
+    }
+
+    function logoutAdmin() {
+        sessionStorage.removeItem("adminActive");
+        document.getElementById("admin-pass-input").value = "";
+        document.getElementById("admin-dash-sec").style.display = "none";
+        document.getElementById("admin-login-sec").style.display = "block";
+    }
+
+    // 2. Fetch Data Channels from Supabase
+    async function fetchGallery() {
+        const container = document.getElementById("live-gallery-container");
+        const { data, error } = await _supabase.from('gallery').select('*').order('id', { ascending: false });
+        
+        if (error) {
+            container.innerHTML = `<div class="loading-placeholder" style="color:#b91c1c;">Failed to sync gallery data from cloud.</div>`;
+            return;
+        }
+
+        if(data.length === 0) {
+            container.innerHTML = `<div class="loading-placeholder">No gallery records found. Upload via Admin Panel above.</div>`;
+            return;
+        }
+
+        const isAdmin = sessionStorage.getItem("adminActive") === "true";
+        container.innerHTML = data.map(item => `
+            <div class="gallery-item">
+                <div class="gallery-img-wrapper">
+                    <img src="${item.image_data}" alt="${item.title}">
+                </div>
+                <div class="gallery-info">
+                    <h4>${item.title}</h4>
+                    <p>${item.description}</p>
+                    ${isAdmin ? `<button class="btn btn-sm btn-danger" style="margin-top:10px; font-size:10px; padding:3px 8px;" onclick="deleteGalleryItem(${item.id})">Remove Card</button>` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    async function fetchEvents() {
+        const container = document.getElementById("live-events-container");
+        const { data, error } = await _supabase.from('events').select('*').order('id', { ascending: true });
+
+        if (error) {
+            container.innerHTML = `<div class="loading-placeholder" style="color:#b91c1c;">Failed to sync calendar entries.</div>`;
+            return;
+        }
+
+        if(data.length === 0) {
+            container.innerHTML = `<div class="loading-placeholder">No planner events scheduled.</div>`;
+            return;
+        }
+
+        const isAdmin = sessionStorage.getItem("adminActive") === "true";
+        container.innerHTML = data.map(ev => `
+            <div class="event-item">
+                <span class="badge ${ev.badge_class || ''}">${ev.date_label}</span>
+                <h4>${ev.title}</h4>
+                <p>${ev.description}</p>
+                ${isAdmin ? `<button class="btn btn-sm btn-danger" style="margin-top:5px; font-size:10px; padding:2px 6px;" onclick="deleteEventItem(${ev.id})">Remove</button>` : ''}
+            </div>
+        `).join('');
+    }
+
+    // 3. Handle Form Submissions & Cloud Sync Data Injection
+    function handleGallerySubmit(e) {
+        e.preventDefault();
+        const btn = document.getElementById("gal-btn");
+        const title = document.getElementById("gal-title").value;
+        const desc = document.getElementById("gal-desc").value;
+        const fileInput = document.getElementById("gal-img-file");
+        
+        if (fileInput.files && fileInput.files[0]) {
+            btn.disabled = true;
+            btn.innerText = "Uploading to Cloud Matrix...";
+            
+            const reader = new FileReader();
+            reader.onload = async function(event) {
+                const imgBase64 = event.target.result;
+                
+                const { error } = await _supabase.from('gallery').insert([
+                    { title: title, description: desc, image_data: imgBase64 }
+                ]);
+
+                btn.disabled = false;
+                btn.innerText = "Publish Gallery Card";
+
+                if (error) {
+                    alert("Submission error encountered: " + error.message);
+                } else {
+                    document.getElementById("gallery-form").reset();
+                    fetchGallery();
+                }
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+
+    async function handleEventSubmit(e) {
+        e.preventDefault();
+        const btn = document.getElementById("ev-btn");
+        const date = document.getElementById("ev-date").value;
+        const title = document.getElementById("ev-title").value;
+        const desc = document.getElementById("ev-desc").value;
+        const badgeClass = document.getElementById("ev-badge-type").value;
+
+        btn.disabled = true;
+        
+        const { error } = await _supabase.from('events').insert([
+            { date_label: date, title: title, description: desc, badge_class: badgeClass }
+        ]);
+
+        btn.disabled = false;
+
+        if (error) {
+            alert("Error adding calendar planner item: " + error.message);
+        } else {
+            document.getElementById("event-form").reset();
+            fetchEvents();
+        }
+    }
+
+    // 4. Record Elimination Handlers
+    async function deleteGalleryItem(id) {
+        if(confirm("Confirm removal of this campus gallery image record?")) {
+            await _supabase.from('gallery').delete().eq('id', id);
+            fetchGallery();
+        }
+    }
+
+    async function deleteEventItem(id) {
+        if(confirm("Confirm removal of this calendar event entry?")) {
+            await _supabase.from('events').delete().eq('id', id);
+            fetchEvents();
+        }
+    }
+</script>
 
 </body>
 </html>

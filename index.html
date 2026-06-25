@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home & About - Namboole High School</title>
+    
+    <!-- Favicon configured to use the requested badge icon -->
+    <link rel="icon" type="image/jpeg" href="badge.jpeg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            line-height: 1.6;
+            color: #111111; /* Black text from form schema */
+            background-color: #f8fafc;
+        }
+        header {
+            background-color: #0b2512; /* Deep Green */
+            color: #ffffff;
+            padding: 25px 40px;
+            border-bottom: 5px solid #facc15; /* Yellow Accent */
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1240px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .school-title h1 {
+            margin: 0;
+            font-size: 30px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+        .school-title p {
+            margin: 5px 0 0 0;
+            color: #facc15;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .logo-img {
+            width: 85px;
+            height: 85px;
+            border: 3px solid #facc15;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        /* --- NAVIGATION BAR FRAMEWORK WITH MOBILE VIEW OVERHAUL --- */
+        nav {
+            background-color: #111111; /* Black Nav */
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        nav a:hover, nav a.active {
+            background-color: #15803d; /* Green Accent */
+            color: #facc15; /* Yellow Active Text */
+        }
+
+        /* Responsive Mobile Toggle Button Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Container & Grid Setup */
+        .container {
+            width: 92%;
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+        
+        /* Premium Hero Component */
+        .hero {
+            background: linear-gradient(135deg, #0b2512 0%, #15803d 100%);
+            color: white;
+            padding: 80px 50px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border-left: 8px solid #facc15;
+            box-shadow: 0 10px 25px rgba(11, 37, 18, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            color: #facc15;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 18px;
+            max-width: 800px;
+            color: #e2e8f0;
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+
+        /* Modern 3-Column Pillars Matrix Configuration */
+        .pillars-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .pillar-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            border-top: 5px solid #15803d;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            transition: transform 0.3s ease;
+        }
+        .pillar-card:hover {
+            transform: translateY(-5px);
+        }
+        .pillar-card.highlight {
+            border-top-color: #facc15;
+        }
+        .pillar-card h3 {
+            color: #0b2512;
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pillar-card p {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .values-list {
+            list-style: none;
+        }
+        .values-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #475569;
+        }
+        .values-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #15803d;
+            font-weight: bold;
+        }
+        
+        /* Layout Structure */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            border-top: 4px solid #111111; /* Black Top Accent */
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 30px;
+        }
+        .card.accent {
+            border-top-color: #15803d; /* Green Border Accent */
+        }
+        .card h3 {
+            margin-bottom: 20px;
+            color: #0b2512;
+            font-size: 24px;
+            border-bottom: 2px solid #facc15;
+            padding-bottom: 10px;
+            font-weight: 600;
+        }
+        .card p {
+            color: #334155;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        /* --- PREMIUM ANTHEM SHOWCASE CARD --- */
+        .anthem-showcase {
+            background: radial-gradient(circle at top right, #0b2512, #111111);
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            border: 2px solid #15803d;
+            text-align: center;
+        }
+        .anthem-showcase h3 {
+            color: #facc15;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed rgba(250, 204, 21, 0.3);
+            padding-bottom: 10px;
+        }
+        .anthem-stanza {
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+        .anthem-stanza:last-of-type {
+            margin-bottom: 0;
+        }
+        .anthem-chorus {
+            font-weight: 600;
+            color: #facc15;
+            background: rgba(21, 128, 61, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid #facc15;
+            border-right: 3px solid #facc15;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #15803d;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0b2512;
+            color: #facc15;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background-color: #111111;
+            color: #94a3b8;
+            padding: 60px 20px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 60px;
+            border-top: 5px solid #15803d;
+        }
+        footer h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        footer p {
+            max-width: 700px;
+            margin: 0 auto 10px auto;
+            line-height: 1.7;
+        }
+        footer a { color: #facc15; text-decoration: none; }
+
+        /* --- RESPONSIVE MOBILE MEDIA QUERY VIEWPORTS --- */
+        @media(max-width: 992px){
+            .main-layout, .pillars-section { 
+                grid-template-columns: 1fr; 
+            }
+            .hero { 
+                padding: 50px 30px; 
+            }
+            .hero h2 { 
+                font-size: 32px; 
+            }
+            header {
+                padding: 20px;
+            }
+            .school-title h1 {
+                font-size: 24px;
+            }
+            
+            /* Responsive Navigation Drawer Conversion */
+            .menu-toggle {
+                display: flex;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: #111111;
+                padding: 20px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+                border-bottom: 4px solid #15803d;
+                gap: 10px;
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            nav a {
+                width: 100%;
+                text-align: left;
+                padding: 12px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="school-title">
+            <h1>NAMBOOLE HIGH SCHOOL</h1>
+            <p>Discipline, Excellence, and Leadership</p>
+        </div>
+        <img src="badge.jpeg" alt="Namboole High School Badge" class="logo-img" onerror="this.style.display='none';">
+    </div>
+</header>
+
+<nav>
+    <div class="nav-container">
+        <!-- Interactive Hamburger lines for small mobile screens -->
+        <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links" id="nav-menu-links">
+            <a href="index.html" class="active">Home & About</a>
+            <a href="admissions.html">Admissions</a>
+            <a href="co-curricular.html">Co-Curricular</a>
+            <a href="gallery.html">Gallery & Events</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="constitution.html">Constitution</a>
+            <a href="past-papers.html">Past Papers</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    
+    <!-- Hero Section -->
+    <div class="hero">
+        <h2>Welcome to Namboole High School</h2>
+        <p>A premier institution dedicated to raising multi-dimensional future leaders through absolute discipline, academic excellence, and technical innovation.</p>
+        <a href="admissions.html" class="btn">Explore Enrollment Channels ➔</a>
+    </div>
+
+    <!-- Pillars Strategic Matrix Section Framework -->
+    <div class="pillars-section">
+        <div class="pillar-card">
+            <h3>👁️ Our Vision</h3>
+            <p>To be a premier center of holistic secondary education and academic excellence, molding self-reliant, innovative, and ethically grounded global citizens.</p>
+        </div>
+        <div class="pillar-card highlight">
+            <h3>🎯 Our Mission</h3>
+            <p>To deliver quality, balanced education equipped with spiritual growth, dynamic leadership training, and critical technical skills to foster all-round student achievement.</p>
+        </div>
+        <div class="pillar-card">
+            <h3>💎 Core Values</h3>
+            <ul class="values-list">
+                <li><strong>Discipline:</strong> Absolute adherence to rules and respectful order.</li>
+                <li><strong>Excellence:</strong> Meriting maximum effort in text and application.</li>
+                <li><strong>Leadership:</strong> Standing tall as proactive future solution builders.</li>
+                <li><strong>Integrity:</strong> Honesty and transparency in academic pursuits.</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Section Grid Split -->
+    <div class="main-layout">
+        
+        <!-- Left Column: Informational Framework -->
+        <div class="main-content">
+            <div class="card accent">
+                <h3>Our Proud History</h3>
+                <p>Founded on a vision of holistic regional instruction, Namboole High School has grown from a humble community-led baseline into a prominent educational hub in Kira Municipality. Strategically located near the symbolic heart of national determination, the school mirrors that resilience and drive inside its academic framework.</p>
+                <p>Over the decades, the institution has successfully adapted to modern curricula, consistently graduating top-tier candidates who serve with integrity across East Africa. Our milestones are anchored on robust spiritual structures, zero-tolerance behavioral metrics, and competitive sports development programs.</p>
+            </div>
+
+            <div class="card">
+                <h3>About Our Curriculum</h3>
+                <p>Namboole High School implements a modern instructional matrix tailored to national evaluation standards. We blend standard technical science practices with extensive cultural and artistic options to help students define clear career tracks early.</p>
+                <p>Our curriculum relies on advanced physical infrastructure, comprehensively equipped science laboratories, and digital portals that empower candidates to cross-verify performance metrics smoothly alongside academic faculty.</p>
+            </div>
+        </div>
+        
+        <!-- Right Column: Anthem Panel Layout Layer -->
+        <div class="sidebar">
+            
+            <!-- School Anthem Block Container -->
+            <div class="anthem-showcase">
+                <h3>School Anthem</h3>
+                
+                <div class="anthem-stanza">
+                    <strong>Verse 1</strong><br>
+                    Arise oh Namboole High we stand,<br>
+                    With shields of knowledge hand in hand.<br>
+                    To shine the light across our land,<br>
+                    United by a noble band.
+                </div>
+                
+                <div class="anthem-stanza anthem-chorus">
+                    <strong>Chorus</strong><br>
+                    Forward we match with structural pride,<br>
+                    With faith and discipline as our guide.<br>
+                    Namboole High, our beacon bright,<br>
+                    We step from darkness to the light!
+                </div>
+                
+                <div class="anthem-stanza">
+                    <strong>Verse 2</strong><br>
+                    In classrooms, sports, and technical space,<br>
+                    We seek for excellence and grace.<br>
+                    To build our nation, win the race,<br>
+                    And make the world a better place.
+                </div>
+            </div>
+
+            <div class="card accent">
+                <h3>Quick Actions</h3>
+                <p>Explore resources directly connected to our cloud database architecture:</p>
+                <a href="past-papers.html" class="btn" style="width: 100%; text-align: center; margin-bottom: 10px;">📚 Download Past Papers</a>
+                <a href="constitution.html" class="btn" style="width: 100%; text-align: center; background-color: #111111; color: #facc15;">📜 View School Rules</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    <h3>Namboole High School</h3>
+    <p>&copy; 2026 Namboole High School. All Rights Reserved.</p>
+    <p>P.O. Box 12345, Kampala, Uganda | Tel: +256 414 111222 | Email: info@namboolehigh.sc.ug</p>
+</footer>
+
+<!-- Light Interactive Script for Mobile Navigation Drawer Toggle -->
+<script>
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.getElementById('nav-menu-links');
+
+    menuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+</script>
+
+</body>
+</html>

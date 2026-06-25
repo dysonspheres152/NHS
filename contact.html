@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Namboole High School</title>
+    <style>
+        
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333333;
+    background-color: #f8fafc;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #0f172a; /* Deep Navy */
+    color: #ffffff;
+    padding: 20px 40px;
+    border-bottom: 4px solid #0284c7; /* Sky Blue accent */
+}
+.header-container {
+    width: 100%;
+}
+.school-title h1 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+}
+.school-title p {
+    margin: 5px 0 0 0;
+    color: #bae6fd;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+nav {
+    background-color: #1e293b;
+    padding: 12px 40px;
+}
+nav a {
+    color: #f1f5f9;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+nav a:hover, nav a.active {
+    background-color: #0284c7;
+    color: #ffffff;
+}
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+.hero {
+    background-color: #0284c7;
+    color: white;
+    padding: 60px 40px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    background-image: linear-gradient(135deg, #0f172a 0%, #0284c7 100%);
+}
+.hero h2 {
+    font-size: 32px;
+    margin: 0 0 15px 0;
+}
+.hero p {
+    font-size: 16px;
+    max-width: 700px;
+    margin: 0;
+    color: #e0f2fe;
+}
+.row {
+    width: 100%;
+    margin-bottom: 25px;
+}
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.col-12 { width: 100%; float: left; }
+.col-8 { width: 66.66%; float: left; padding-right: 20px; }
+.col-4 { width: 33.33%; float: left; padding-left: 20px; }
+.col-6 { width: 50%; float: left; padding: 10px; }
+.col-3 { width: 25%; float: left; padding: 10px; }
+
+.card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    border-top: 4px solid #0f172a;
+    margin-bottom: 20px;
+}
+.card.accent {
+    border-top-color: #0284c7;
+}
+.card h3 {
+    margin-top: 0;
+    color: #0f172a;
+    font-size: 20px;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 10px;
+}
+.btn {
+    display: inline-block;
+    background-color: #0284c7;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: #0369a1;
+}
+.btn-secondary {
+    background-color: #475569;
+}
+.btn-secondary:hover {
+    background-color: #334155;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #ffffff;
+}
+table th {
+    background-color: #0f172a;
+    color: white;
+    text-align: left;
+    padding: 12px;
+    font-size: 14px;
+}
+table td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 14px;
+}
+table tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+.badge {
+    background-color: #f59e0b;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.badge-success { background-color: #10b981; }
+.badge-info { background-color: #3b82f6; }
+
+footer {
+    background-color: #0f172a;
+    color: #94a3b8;
+    padding: 40px 20px;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 50px;
+    border-top: 4px solid #0284c7;
+}
+footer p { margin: 5px 0; }
+footer a { color: #38bdf8; text-decoration: none; }
+
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    font-size: 14px;
+}
+textarea.form-control {
+    height: 120px;
+    resize: vertical;
+}
+.img-placeholder {
+    background-color: #e2e8f0;
+    color: #64748b;
+    width: 100%;
+    height: 180px;
+    line-height: 180px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.list-unstyled {
+    list-style: none;
+    padding-left: 0;
+}
+.list-unstyled li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 15px;
+}
+.list-unstyled li::before {
+    content: "•";
+    color: #0284c7;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="school-title">
+            <h1>NAMBOOLE HIGH SCHOOL</h1>
+            <p>Discipline, Excellence, and Leadership</p>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <a href="index.html">Home & About</a>
+<a href="admissions.html">Admissions</a>
+<a href="co-curricular.html">Co-Curricular</a>
+<a href="gallery.html">Gallery & Events</a>
+<a href="contact.html" class="active">Contact Us</a>
+<a href="constitution.html">Constitution</a>
+<a href="past-papers.html">Past Papers</a>
+
+</nav>
+
+<div class="container">
+    
+<div class="hero">
+    <h2>Contact Our Administration</h2>
+    <p>Have inquiries regarding admissions, school operations, or student progress? Get in touch with our communications team through the formal touchpoints below.</p>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card accent">
+            <h3>Digital Inquiry Form</h3>
+            <p>Please populate the fields below, and a school communications representative will respond via email within 48 business hours:</p>
+            
+            <form action="#" method="POST" onsubmit="alert('Thank you for contacting Namboole High School. Your message has been sent successfully.'); return false;">
+                <div class="form-group">
+                    <label>Your Full Name:</label>
+                    <input type="text" class="form-control" required placeholder="e.g. John Okello">
+                </div>
+                <div class="form-group">
+                    <label>Email Address:</label>
+                    <input type="email" class="form-control" required placeholder="e.g. parent@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Telephone Number:</label>
+                    <input type="tel" class="form-control" required placeholder="e.g. +256 700 000000">
+                </div>
+                <div class="form-group">
+                    <label>Nature of Inquiry:</label>
+                    <select class="form-control">
+                        <option>General Admissions Inquiry</option>
+                        <option>Fees and Finance Desk</option>
+                        <option>Academics and Curriculum</option>
+                        <option>Employment / Career Opportunities</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Detailed Message:</label>
+                    <textarea class="form-control" required placeholder="Type your inquiry details here..."></textarea>
+                </div>
+                <button type="submit" class="btn">Send Secure Message</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="col-6">
+        <div class="card">
+            <h3>Official Touchpoints</h3>
+            <p><strong>Physical Address:</strong><br>Namboole School Road, Bweyogerere, Kira Municipality,<br>Kampala, Uganda.</p>
+            <p><strong>Postal Box Address:</strong><br>P.O. Box 12345, Kampala, Uganda</p>
+            <p><strong>Official Phone Lines:</strong><br>📞 General Registry: +256 414 111222<br>📞 Admissions Hotline: +256 772 333444<br>📞 Accounts Office: +256 701 555666</p>
+            <p><strong>Official Emails:</strong><br>✉️ General Desk: info@namboolehigh.sc.ug<br>✉️ Admissions Desk: admissions@namboolehigh.sc.ug</p>
+        </div>
+        
+        <div class="card accent">
+            <h3>School Working Hours</h3>
+            <table style="margin: 0; font-size: 13px;">
+                <tr><td><strong>Monday - Friday</strong></td><td>7:30 AM - 5:00 PM</td></tr>
+                <tr><td><strong>Saturday</strong></td><td>8:30 AM - 1:00 PM (Admissions Only)</td></tr>
+                <tr><td><strong>Sunday & Public Holidays</strong></td><td><span class="badge">Closed</span></td></tr>
+            </table>
+            <p style="margin-top: 15px; font-size: 13px; color: #475569;"><em>Note: Parents tracking student residential performance are strongly encouraged to seek appointments through the Deputy Headteacher's office during working hours.</em></p>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 Namboole High School. All Rights Reserved.</p>
+    <p>P.O. Box 12345, Kampala, Uganda | Tel: +256 414 111222 | Email: info@namboolehigh.sc.ug</p>
+</footer>
+
+</body>
+</html>

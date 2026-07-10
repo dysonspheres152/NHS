@@ -3,1101 +3,686 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admissions & Procedures - Namboole High School</title>
+    <title>Academic Resource Center | Namboole High School</title>
     
+    <!-- Favicon configured to use the requested badge icon -->
     <link rel="icon" type="image/jpeg" href="badge.jpeg">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         * {
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
         }
         body {
             line-height: 1.6;
-            color: #1e293b; 
-            background-color: #f8fafc; 
-            margin: 0;
-            padding: 0;
+            color: #111111; 
+            background-color: #f8fafc;
         }
         header {
-            background: linear-gradient(135deg, #07190c 0%, #0b2512 100%); 
+            background-color: #0b2512; /* Deep Green */
             color: #ffffff;
             padding: 25px 40px;
-            border-bottom: 5px solid #facc15; 
-            position: relative;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-bottom: 5px solid #facc15; /* Yellow Accent */
         }
         .header-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 0 auto;
             width: 100%;
         }
         .school-title h1 {
             margin: 0;
-            font-size: 32px;
+            font-size: 30px;
             letter-spacing: 0.5px;
             color: #ffffff;
             font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         .school-title p {
             margin: 5px 0 0 0;
-            color: #facc15; 
+            color: #facc15;
             font-size: 13px;
             text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1.5px;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
-        .logo-placeholder {
-            width: 90px;
-            height: 90px;
-            background-color: #ffffff;
+        .logo-img {
+            width: 85px;
+            height: 85px;
             border: 3px solid #facc15;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: transform 0.3s ease;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
-        .logo-placeholder:hover {
-            transform: scale(1.05);
-        }
-        .logo-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 2px;
-        }
-        
-        /* Responsive Navigation Menu Infrastructure */
-        .nav-wrapper {
-            background-color: #0f172a;
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        .menu-toggle, .menu-icon {
-            display: none;
-        }
+
+        /* --- NAVIGATION BAR FRAMEWORK --- */
         nav {
+            background-color: #111111; /* Black Nav */
             padding: 0 40px;
-            display: flex;
-            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
-        nav a {
+        .nav-container {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        nav a, nav button {
             color: #94a3b8;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 600;
-            padding: 16px 20px;
-            transition: all 0.2s ease-in-out;
-            border-bottom: 3px solid transparent;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
-        nav a:hover, nav a.active {
-            color: #facc15; 
-            background-color: rgba(255,255,255,0.02);
-            border-bottom: 3px solid #15803d; 
+        nav a:hover, nav button:hover, nav a.active {
+            background-color: #15803d; /* Green Accent */
+            color: #facc15; /* Yellow Active Text */
         }
 
-        /* Mobile Viewport Modifications */
-        @media (max-width: 768px) {
-            .menu-icon {
-                display: block;
-                padding: 15px 20px;
-                cursor: pointer;
-                color: #facc15;
-                font-weight: 700;
-                font-size: 24px;
-                user-select: none;
-                text-align: right;
-                background-color: #0f172a;
-            }
-            nav {
-                display: none;
-                flex-direction: column;
-                padding: 0;
-                background-color: #111827;
-            }
-            nav a {
-                padding: 14px 24px;
-                border-bottom: none;
-                border-left: 4px solid transparent;
-                display: block;
-            }
-            nav a:hover, nav a.active {
-                border-bottom: none;
-                border-left: 4px solid #15803d;
-            }
-            .menu-toggle:checked ~ nav {
-                display: flex;
-            }
+        /* Responsive Mobile Toggle Button Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #ffffff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
         }
 
         .container {
-            width: 100%;
-            max-width: 1200px;
+            width: 92%;
+            max-width: 1240px;
             margin: 0 auto;
-            padding: 40px 20px;
-        }
-        .hero {
-            background: linear-gradient(135deg, #0b2512 0%, #15803d 100%);
-            color: white;
-            padding: 50px 40px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            border-left: 8px solid #facc15;
-            box-shadow: 0 10px 25px -5px rgba(21, 128, 61, 0.15);
-        }
-        .hero h2 {
-            font-size: 36px;
-            margin: 0 0 12px 0;
-            color: #facc15;
-            font-weight: 700;
-        }
-        .hero p {
-            font-size: 16px;
-            max-width: 750px;
-            margin: 0;
-            color: #f1f5f9;
-            opacity: 0.95;
-        }
-        .row {
-            display: grid;
-            grid-template-columns: 1.9fr 1.1fr;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        @media(max-width: 992px) {
-            .row { grid-template-columns: 1fr; }
-        }
-
-        .card {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-            border: 1px solid #e2e8f0;
-            margin-bottom: 30px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover {
-            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.05);
-        }
-        .card.accent {
-            border-top: 5px solid #15803d; 
-        }
-        .card h3 {
-            margin-top: 0;
-            color: #0b2512;
-            font-size: 22px;
-            font-weight: 700;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #15803d;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 12px rgba(21, 128, 61, 0.2);
-        }
-        .btn:hover {
-            background-color: #0b2512;
-            color: #facc15;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 15px rgba(11, 37, 18, 0.25);
-        }
-        .btn-black {
-            background-color: #0f172a;
-            color: #facc15;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
-        }
-        .btn-black:hover {
-            background-color: #15803d;
-            color: white;
-            box-shadow: 0 6px 15px rgba(21, 128, 61, 0.2);
-        }
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 20px 0;
-            background: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid #e2e8f0;
-        }
-        table th {
-            background-color: #0f172a;
-            color: #facc15;
-            text-align: left;
-            padding: 14px 16px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        table td {
-            padding: 14px 16px;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 14px;
-            color: #334155;
-        }
-        table tr:last-child td {
-            border-bottom: none;
-        }
-        table tr:nth-child(even) {
-            background-color: #f8fafc;
-        }
-        .badge {
-            background-color: #fef08a;
-            color: #854d0e;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: inline-block;
-        }
-        
-        .form-tabs {
-            display: flex;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #f1f5f9;
-            gap: 8px;
-        }
-        .tab-btn {
-            padding: 12px 24px;
-            cursor: pointer;
-            background: #f1f5f9;
-            border: 1px solid #e2e8f0;
-            border-bottom: none;
-            font-weight: 600;
-            color: #64748b;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-            transition: all 0.2s ease;
-        }
-        .tab-btn:hover {
-            background: #e2e8f0;
-            color: #1e293b;
-        }
-        .tab-btn.active {
-            background: #15803d;
-            color: white;
-            border-color: #15803d;
-        }
-        .form-container {
-            display: none;
-        }
-        .form-container.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #334155;
-        }
-        .form-control {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 14px;
-            background-color: #fff;
-            color: #1e293b;
-            transition: all 0.2s ease;
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: #15803d;
-            box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.1);
-        }
-        textarea.form-control {
-            height: 120px;
-            resize: vertical;
-        }
-
-        .subjects-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-        }
-        .subject-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
-        .subject-item input {
-            width: 16px;
-            height: 16px;
-            accent-color: #15803d;
+            padding: 40px 0;
         }
 
         footer {
-            background-color: #0f172a;
+            background-color: #111111;
             color: #94a3b8;
-            padding: 50px 20px;
+            padding: 40px 20px;
             text-align: center;
             font-size: 14px;
             margin-top: 60px;
             border-top: 5px solid #15803d;
         }
-        footer p { margin: 6px 0; }
-        footer a { color: #facc15; text-decoration: none; font-weight: 600; }
-        
-        .admin-section {
-            background: #f8fafc;
-            border: 1px dashed #cbd5e1;
-            padding: 20px;
-            margin-top: 25px;
-            border-radius: 8px;
-        }
-        .admin-section h4 {
-            margin-top: 0;
-            margin-bottom: 12px;
-            color: #475569;
-            font-size: 15px;
-            font-weight: 600;
-        }
-        .admin-section textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            background: #ffffff;
-            font-size: 14px;
-        }
 
-        .portal-gate-lock {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 30px;
-            margin-top: 40px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        /* --- RESPONSIVE MOBILE VIEWPORTS --- */
+        @media(max-width: 992px){
+            header { padding: 20px; }
+            .school-title h1 { font-size: 24px; }
+            .menu-toggle { display: flex; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: #111111;
+                padding: 20px;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+                border-bottom: 4px solid #15803d;
+                gap: 10px;
+            }
+            .nav-links.active { display: flex; }
+            nav a, nav button { width: 100%; text-align: left; padding: 12px 20px; }
         }
-        .portal-gate-lock h3 {
-            color: #0b2512;
-            margin-top: 0;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 12px;
-            font-size: 20px;
-            font-weight: 700;
-        }
-        .login-grid-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 20px;
-            align-items: end;
-        }
-        @media(max-width: 768px) {
-            .login-grid-inputs { grid-template-columns: 1fr; }
-        }
-        #admin-workspace-pane {
-            display: none;
-            background: #f8fafc;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 99999;
-            overflow-y: auto;
-            padding: 40px;
-        }
-        .workspace-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 4px solid #facc15;
-            background: #0b2512;
-            color: #ffffff;
-            margin: -40px -40px 30px -40px;
-            padding: 25px 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        .action-approve-btn {
-            background-color: #16a34a;
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-right: 5px;
-        }
-        .action-approve-btn:hover { background-color: #15803d; }
-        .action-deny-btn {
-            background-color: #dc2626;
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .action-deny-btn:hover { background-color: #b91c1c; }
-        .status-badge {
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-        .status-Pending { background: #fef08a; color: #854d0e; }
-        .status-Approved { background: #dcfce7; color: #166534; }
-        .status-Denied { background: #fee2e2; color: #991b1b; }
     </style>
 </head>
 <body>
 
-<div id="school-main-portal-view">
-    <header>
-        <div class="header-container">
-            <div class="school-title">
-                <h1>NAMBOOLE HIGH SCHOOL</h1>
-                <p>Discipline, Excellence, and Leadership</p>
-            </div>
-            <div class="logo-placeholder" id="school-badge">
-                <img src="badge.jpeg" alt="Namboole High School Badge">
-            </div>
+<header>
+    <div class="header-container">
+        <div class="school-title">
+            <h1>NAMBOOLE HIGH SCHOOL</h1>
+            <p>Discipline, Excellence, and Leadership</p>
         </div>
-    </header>
+        <img src="badge.jpeg" alt="Namboole High School Badge" class="logo-img" onerror="this.style.display='none';">
+    </div>
+</header>
 
-    <div class="nav-wrapper">
-        <input type="checkbox" id="menu-checkbox" class="menu-toggle">
-        <label for="menu-checkbox" class="menu-icon">&#9776;</label>
-        <nav>
+<nav>
+    <div class="nav-container">
+        <button class="menu-toggle" id="mobile-menu-btn" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="nav-links" id="nav-menu-links">
             <a href="index.html">Home & About</a>
-            <a href="admissions.html" class="active">Admissions</a>
+            <a href="admissions.html">Admissions</a>
             <a href="co-curricular.html">Co-Curricular</a>
             <a href="gallery.html">Gallery & Events</a>
             <a href="contact.html">Contact Us</a>
             <a href="constitution.html">Constitution</a>
-            <a href="past-papers.html">Past Papers</a>
-        </nav>
+            <a href="past-papers.html" class="active">Past Papers</a>
+            <button onclick="showSection('library-view')" class="text-left">📚 View Library</button>
+            <button id="login-trigger" onclick="toggleModal('login-modal', true)" style="color: #facc15; font-weight: 700;">🔑 DOS Login</button>
+            <button id="logout-trigger" onclick="logoutDOS()" class="hidden" style="color: #ef4444; font-weight: 700;">✕ Logout DOS</button>
+        </div>
     </div>
+</nav>
 
-    <div class="container">
+<div class="container">
+    <main class="w-full">
         
-    <div class="hero">
-        <h2>Admissions & Digital Portals</h2>
-        <p>Join our thriving academic family. Submit your details below through our unified applicant stream for students and educators.</p>
-    </div>
-
-    <div class="row">
-        <div class="col-8">
-            <div class="card accent">
-                <h3>Online Application & Portal Entry</h3>
-                <p style="font-size: 14px; margin-bottom: 20px; color: #64748b;">Please pick the appropriate processing channel below. Completing registration redirects you directly to the <strong>Verification Desk</strong> on the Past Papers framework page.</p>
+        <!-- ================= PUBLIC LIBRARY VIEW ================= -->
+        <section id="library-view" class="space-y-6">
+            <div class="bg-gradient-to-r from-[#0b2512] to-[#15803d] p-8 rounded-xl text-white border-l-8 border-[#facc15] shadow-lg mb-6">
+                <h2 class="text-3xl font-bold text-[#facc15]">Past Paper Repository</h2>
+                <p class="text-slate-200 mt-2">Open access browsing. Enter your DOS-assigned Credential ID below to authorize document downloads.</p>
                 
-                <div class="form-tabs">
-                    <div class="tab-btn active" onclick="switchForm('student')">Student Application</div>
-                    <div class="tab-btn" onclick="switchForm('teacher')">Teacher Recruitment</div>
+                <div class="mt-6 max-w-md flex gap-2">
+                    <input type="text" id="auth-status" placeholder="Enter Student/Teacher Access ID..." class="p-3 w-full text-slate-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#facc15]">
+                    <button onclick="verifyAccessID()" class="bg-[#111111] text-[#facc15] px-6 py-2 rounded-lg font-bold hover:bg-slate-900 transition border border-[#facc15]">Verify</button>
                 </div>
-
-                <div id="student-form-pane" class="form-container active">
-                    <form id="student-app-form" onsubmit="handleFormSubmission(event, 'student')">
-                        <div class="form-group">
-                            <label>Applicant Full Name</label>
-                            <input type="text" id="stu-name" class="form-control" required placeholder="As it appears on academic records">
-                        </div>
-                        <div class="form-group">
-                            <label>Target Class (S.1 to S.6)</label>
-                            <select id="stu-class" class="form-control" required onchange="handleClassChange()">
-                                <option value="">-- Select Class --</option>
-                                <option value="Senior 1">Senior 1</option>
-                                <option value="Senior 2">Senior 2</option>
-                                <option value="Senior 3">Senior 3</option>
-                                <option value="Senior 4">Senior 4</option>
-                                <option value="Senior 5">Senior 5</option>
-                                <option value="Senior 6">Senior 6</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Level</label>
-                            <input type="text" id="stu-level" class="form-control" readonly placeholder="Determined by selected class">
-                        </div>
-                        <div class="form-group">
-                            <label>Stream / Combination Selection</label>
-                            <select id="stu-stream" class="form-control" required>
-                                <option value="">-- Choose Class First --</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label id="compulsory-label">Compulsory Subjects</label>
-                            <div class="subjects-grid" id="compulsory-subjects-box">
-                                <span style="color:#94a3b8; font-size:14px;">Select level to populate subjects...</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Optional Subjects Electives</label>
-                            <div class="subjects-grid" id="optional-subjects-box">
-                                <div class="subject-item"><input type="checkbox" name="opt_sub" value="ict"><span>ICT</span></div>
-                                <div class="subject-item"><input type="checkbox" name="opt_sub" value="art"><span>Art</span></div>
-                                <div class="subject-item"><input type="checkbox" name="opt_sub" value="entrepreneurship"><span>Entrepreneurship</span></div>
-                                <div class="subject-item"><input type="checkbox" name="opt_sub" value="agriculture"><span>Agriculture</span></div>
-                                <div class="subject-item"><input type="checkbox" name="opt_sub" value="ire"><span>IRE</span></div>
-                                <div class="subject-item"><input type="checkbox" name="opt_sub" value="cre"><span>CRE</span></div>
-                                <div class="subject-item"><input type="checkbox" name="opt_sub" value="literature"><span>Literature</span></div>
-                                <div class="subject-item"><input type="checkbox" name="opt_sub" value="luganda"><span>Luganda</span></div>
-                                <div class="subject-item"><input type="checkbox" name="opt_sub" value="kiswahili"><span>Kiswahili</span></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Parent / Guardian Contact Mobile</label>
-                            <input type="text" id="stu-phone" class="form-control" required placeholder="e.g. +256...">
-                        </div>
-                        <div class="form-group">
-                            <label>Previous Academic Score summary or Aggregates</label>
-                            <input type="text" id="stu-scores" class="form-control" required placeholder="e.g. 8 Aggregates (PLE) / 12 Aggs (UCE)">
-                        </div>
-                        <button type="submit" class="btn">Submit Student Application ➔</button>
-                    </form>
-                </div>
-
-                <div id="teacher-form-pane" class="form-container">
-                    <form id="teacher-app-form" onsubmit="handleFormSubmission(event, 'teacher')">
-                        <div class="form-group">
-                            <label>Full Professional Name</label>
-                            <input type="text" id="tea-name" class="form-control" required placeholder="e.g. Tr. Okollie John">
-                        </div>
-                        <div class="form-group">
-                            <label>Primary Teaching Subjects</label>
-                            <input type="text" id="tea-subjects" class="form-control" required placeholder="e.g. Mathematics / Physics">
-                        </div>
-                        <div class="form-group">
-                            <label>Level of Academic Knowledge</label>
-                            <select id="tea-knowledge-level" class="form-control" required>
-                                <option value="">-- Choose level qualification --</option>
-                                <option value="Diploma Holder">Diploma in Secondary Education</option>
-                                <option value="Bachelor's Degree">Bachelor of Education / Science / Arts</option>
-                                <option value="Master's Degree">Master's Degree Specialist</option>
-                                <option value="PhD">Doctorate / PhD Level</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Upload Curriculum Vitae (CV Document)</label>
-                            <input type="file" id="tea-cv-file" class="form-control" required accept=".pdf,.doc,.docx">
-                        </div>
-                        <div class="form-group">
-                            <label>Contact Phone / WhatsApp</label>
-                            <input type="text" id="tea-phone" class="form-control" required placeholder="Contact line">
-                        </div>
-                        <div class="form-group">
-                            <label>Brief Statement of Experience & Credentials</label>
-                            <textarea id="tea-experience" class="form-control" required placeholder="List previous institutions or qualification levels..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-black">Submit Instructor Profile ➔</button>
-                    </form>
-                </div>
+                <p id="access-message" class="text-sm mt-2 text-slate-300 font-medium"></p>
             </div>
 
-            <div class="card">
-                <h3>Admission Requirements</h3>
-                <div id="requirements-content"></div>
+            <div class="border-b pb-2 mb-4">
+                <h3 class="text-xl font-bold text-[#0b2512]">Available Resources</h3>
+            </div>
 
-                <div class="admin-section">
-                    <h4>Modify Requirements View (Admin Only)</h4>
-                    <div style="margin-bottom: 10px; display: flex; gap: 10px;">
-                        <input type="password" id="auth-req-pwd" class="form-control" style="max-width:250px;" placeholder="Enter Security Password">
+            <!-- Dynamic Papers Grid -->
+            <div id="papers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Javascript injects cards here dynamically -->
+            </div>
+        </section>
+
+        <!-- ================= DOS DASHBOARD (PROTECTED) ================= -->
+        <section id="dos-view" class="hidden space-y-6">
+            <div class="bg-[#111111] text-white p-6 rounded-xl flex justify-between items-center border-b-4 border-[#15803d] mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-[#facc15]">DOS Administrative Command</h2>
+                    <p class="text-slate-400 text-sm">Manage curriculum assets and issue access credentials.</p>
+                </div>
+                <span class="bg-[#15803d] text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">Active Session</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <!-- Panel 1: Document Management -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-[#0b2512] mb-4 border-b pb-2 flex items-center gap-2">📁 Upload New Asset</h3>
+                    
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Paper Description / Exam Title</label>
+                    <input type="text" id="paper-title" placeholder="e.g., S.4 Mock Exam 2026" class="w-full mb-3 p-2.5 border rounded focus:ring-1 focus:ring-[#15803d] text-sm">
+                    
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Subject Branch</label>
+                    <select id="subject-select" class="w-full mb-3 p-2.5 border rounded focus:ring-1 focus:ring-[#15803d] text-sm bg-white">
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="Biology">Biology</option>
+                        <option value="English">English</option>
+                        <option value="History">History</option>
+                    </select>
+
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Select File from Storage</label>
+                    <input type="file" id="paper-file" class="w-full mb-4 p-1 text-sm border rounded bg-slate-50 cursor-pointer">
+                    
+                    <button onclick="uploadPaper()" class="w-full bg-[#15803d] hover:bg-[#0b2512] text-white font-bold p-3 rounded-lg shadow transition">
+                        Process and Commit Upload
+                    </button>
+                </div>
+
+                <!-- Panel 2: Credential Manager -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-[#0b2512] mb-4 border-b pb-2 flex items-center gap-2">🔑 Credential Manager</h3>
+                    
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Issue Student/Teacher ID</label>
+                    <div class="flex gap-2 mb-4">
+                        <input type="text" id="new-user-id" placeholder="e.g., NHS-2026-894" class="w-full p-2.5 border rounded text-sm uppercase">
+                        <button onclick="registerUser()" class="bg-[#0b2512] hover:bg-[#111111] text-[#facc15] px-4 font-bold rounded text-sm transition">
+                            Issue
+                        </button>
                     </div>
-                    <textarea id="edit-requirements-box" rows="5" placeholder="Raw HTML or text items content..."></textarea>
-                    <button class="btn" onclick="saveRequirementsSecurely()">Update Requirements Text</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-4">
-            <div class="card accent">
-                <h3>Key Intake Dates</h3>
-                <div id="dates-content"></div>
 
-                <div class="admin-section">
-                    <h4>Modify Intake Timelines (Admin Only)</h4>
-                    <div style="margin-bottom: 10px;">
-                        <input type="password" id="auth-dates-pwd" class="form-control" placeholder="Enter Security Password">
+                    <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Currently Authorized IDs</h4>
+                    <div id="credentials-list" class="max-h-48 overflow-y-auto border rounded bg-slate-50 p-2 space-y-1 text-sm">
+                        <!-- Dynamic credentials tracking list -->
                     </div>
-                    <textarea id="edit-dates-box" rows="4" placeholder="Enter updated terms scheduling text..."></textarea>
-                    <button class="btn" onclick="saveDatesSecurely()">Update Dates</button>
+                </div>
+
+                <!-- Panel 3: Quick Guidelines -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-[#0b2512] mb-3 border-b pb-2">Admin Guidelines</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-2">
+                        <strong>Repository Controls:</strong> All records modified here sync across public channels instantly. 
+                    </p>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        To <strong>Edit inline descriptions</strong>, change the text values inside the data matrix grid below and click Save.
+                    </p>
                 </div>
             </div>
 
-            <div class="card">
-                <h3>Fees Structure Policy</h3>
-                <div id="fees-content"></div>
-
-                <div class="admin-section">
-                    <h4>Modify Fees Overview (Admin Only)</h4>
-                    <div style="margin-bottom: 10px;">
-                        <input type="password" id="auth-fees-pwd" class="form-control" placeholder="Enter Security Password">
-                    </div>
-                    <textarea id="edit-fees-box" rows="5" placeholder="Update calculations context or custom terms layout..."></textarea>
-                    <button class="btn" onclick="saveFeesSecurely()">Update Fee Structures</button>
+            <!-- Master Data Grid -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mt-6">
+                <h3 class="text-lg font-bold text-[#0b2512] mb-4">Active Repository Data Matrix</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 uppercase text-xs tracking-wider border-b">
+                                <th class="p-3">Subject</th>
+                                <th class="p-3">Description (Editable)</th>
+                                <th class="p-3">File Asset Name</th>
+                                <th class="p-3 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body">
+                            <!-- Dynamic data rows injected here -->
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="portal-gate-lock">
-        <h3>🔐 Registrar & Administrator Gate</h3>
-        <div class="login-grid-inputs">
-            <div class="form-group" style="margin:0;">
-                <label>Admin Username</label>
-                <input type="text" id="gate-uid" class="form-control" placeholder="Enter credentials">
-            </div>
-            <div class="form-group" style="margin:0;">
-                <label>Security Keyphrase</label>
-                <input type="password" id="gate-pwd" class="form-control" placeholder="•••••">
-            </div>
-            <button class="btn btn-black" onclick="challengeGateway()">Verify Authorization ➔</button>
-        </div>
-    </div>
-
-    </div>
-
-    <footer>
-        <p>&copy; 2026 Namboole High School. All Rights Reserved.</p>
-        <p>P.O. Box 12345, Kampala, Uganda | Tel: +256 414 111222 | Email: info@namboolehigh.sc.ug</p>
-    </footer>
+        </section>
+    </main>
 </div>
 
-<div id="admin-workspace-pane">
-    <div class="workspace-header">
-        <div>
-            <h2 style="margin:0; font-size:24px; color:#facc15;">Application Approvals Panel</h2>
-            <p style="margin:5px 0 0 0; font-size:13px; color:#ffffff; opacity:0.9;">Logged into cloud ledger as: <strong>Dyson J</strong></p>
+<!-- Login Modal -->
+<div id="login-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50">
+    <div class="bg-white p-8 rounded-xl w-85 border-t-8 border-[#0b2512] shadow-2xl">
+        <div class="text-center mb-4">
+            <h3 class="font-bold text-xl text-[#0b2512]">DOS Authentication</h3>
+            <p class="text-xs text-slate-500">Sign in to initialize administrative capabilities</p>
         </div>
-        <button class="btn" style="background-color: #facc15; color: #0b2512; margin-right: 10px;" onclick="window.location.href='records.html'">View Official Records ➔</button>
-        <button class="btn btn-black" onclick="terminateWorkspaceSession()">Logout Securely</button>
-    </div>
-
-    <div class="card accent">
-        <h3>Live Admissions Processing Stream</h3>
-        <p>Review student entries and educator employment summaries matching records within the Supabase instance data layer.</p>
-        
-        <table id="applications-table-stream">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Type</th>
-                    <th>Applicant Details Summary</th>
-                    <th>Status</th>
-                    <th style="width: 220px;">Execution Actions</th>
-                </tr>
-            </thead>
-            <tbody id="application-rows-target">
-                <tr>
-                    <td colspan="5" style="text-align:center; color:#64748b;">Awaiting active cloud synchronization lookup...</td>
-                </tr>
-            </tbody>
-        </table>
+        <input type="password" id="dos-pass" placeholder="Enter Security Password" class="w-full p-3 border rounded-lg mb-4 text-center text-lg tracking-widest focus:outline-[#15803d]">
+        <div class="flex gap-2">
+            <button onclick="toggleModal('login-modal', false)" class="w-1/3 bg-slate-200 hover:bg-slate-300 text-slate-700 py-2.5 rounded-lg text-sm font-semibold transition">Cancel</button>
+            <button onclick="attemptLogin()" class="w-2/3 bg-[#0b2512] hover:bg-[#111111] text-[#facc15] py-2.5 rounded-lg text-sm font-bold transition shadow-md">Login</button>
+        </div>
     </div>
 </div>
 
+<footer>
+    <h3>Namboole High School</h3>
+    <p>&copy; 2026 Namboole High School. All Rights Reserved.</p>
+    <p>P.O. Box 12345, Kampala, Uganda | Tel: +256 414 111222 | Email: info@namboolehigh.sc.ug</p>
+</footer>
+
+<!-- Functional Data Script Component Engine -->
 <script>
-    const SUPABASE_URL = "https://uxhjulraredskkgghfav.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_oxLVKxNQJtNBo4pn6cvGuQ_1Hk56B3L";
+    // Initialize Supabase Client
+    const SUPABASE_URL = 'https://umrxbsdnrtsfnwunourt.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_JtR1fTuuXmCruIN2jWGqbQ__2Yl56Z-'; // Use your actual public anon key
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    function getHeaders() {
-        return {
-            "apikey": SUPABASE_KEY,
-            "Authorization": `Bearer ${SUPABASE_KEY}`,
-            "Content-Type": "application/json",
-            "Prefer": "return=representation"
-        };
-    }
+    let appPapers = [];
+    let appCredentials = [];
+    let authenticatedUserToken = false;
 
-    document.querySelectorAll('textarea').forEach(textarea => {
-        textarea.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                e.stopPropagation(); 
-            }
-        });
+    document.addEventListener("DOMContentLoaded", async () => {
+        await fetchAppData();
+        renderPublicLibrary();
+        renderAdminDashboard();
     });
 
-    window.onload = function() {
-        loadStaticBlocks();
-    };
+    // Fetch data live from Supabase
+    async function fetchAppData() {
+        try {
+            const { data: papers, error: pError } = await supabaseClient.from('nhs_papers').select('*');
+            if (pError) throw pError;
+            appPapers = papers || [];
 
-    function handleClassChange() {
-        const classSelect = document.getElementById('stu-class').value;
-        const levelInput = document.getElementById('stu-level');
-        const streamSelect = document.getElementById('stu-stream');
-        const compulsoryBox = document.getElementById('compulsory-subjects-box');
-        const compulsoryLabel = document.getElementById('compulsory-label');
+            const { data: creds, error: cError } = await supabaseClient.from('nhs_credentials').select('*');
+            if (cError) throw cError;
+            appCredentials = creds ? creds.map(c => c.credential) : [];
+        } catch (err) {
+            console.error('Error fetching data from Supabase:', err);
+        }
+    }
 
-        if (!classSelect) {
-            levelInput.value = '';
-            streamSelect.innerHTML = '<option value="">-- Choose Class First --</option>';
-            compulsoryBox.innerHTML = '<span style="color:#94a3b8; font-size:14px;">Select level to populate subjects...</span>';
+    // Mobile Navigation Toggle
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.getElementById('nav-menu-links');
+    menuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    function toggleModal(id, show) {
+        document.getElementById(id).classList.toggle('hidden', !show);
+        if(show) {
+            document.getElementById('dos-pass').focus();
+            if(navLinks.classList.contains('active')) navLinks.classList.remove('active');
+        }
+    }
+
+    function showSection(id) {
+        document.getElementById('library-view').classList.toggle('hidden', id !== 'library-view');
+        document.getElementById('dos-view').classList.toggle('hidden', id !== 'dos-view');
+        if(navLinks.classList.contains('active')) navLinks.classList.remove('active');
+    }
+
+    function attemptLogin() {
+        const passValue = document.getElementById('dos-pass').value;
+        if (passValue === '1234' || passValue === 'dyson123') {
+            toggleModal('login-modal', false);
+            document.getElementById('dos-pass').value = '';
+            document.getElementById('login-trigger').classList.add('hidden');
+            document.getElementById('logout-trigger').classList.remove('hidden');
+            showSection('dos-view');
+            renderAdminDashboard();
+        } else { 
+            alert("Invalid Credentials. Please access via Authorized DOS parameters."); 
+        }
+    }
+
+    function logoutDOS() {
+        document.getElementById('login-trigger').classList.remove('hidden');
+        document.getElementById('logout-trigger').classList.add('hidden');
+        showSection('library-view');
+    }
+
+    function verifyAccessID() {
+        const inputId = document.getElementById('auth-status').value.trim().toUpperCase();
+        const messageElement = document.getElementById('access-message');
+        
+        if (appCredentials.map(c => c.toUpperCase()).includes(inputId)) {
+            authenticatedUserToken = true;
+            messageElement.innerText = "✓ Authentication successful. Download pathways initialized.";
+            messageElement.className = "text-sm mt-2 text-emerald-600 font-medium";
+            renderPublicLibrary();
+        } else {
+            authenticatedUserToken = false;
+            messageElement.innerText = "✕ Invalid Credentials. Contact the DOS Office to obtain download authorization.";
+            messageElement.className = "text-sm mt-2 text-red-600 font-medium";
+            renderPublicLibrary();
+        }
+    }
+
+    function renderPublicLibrary() {
+        const grid = document.getElementById('papers-grid');
+        grid.innerHTML = '';
+        if (appPapers.length === 0) {
+            grid.innerHTML = `<p class="text-slate-500 italic col-span-3">No past papers available in the repository.</p>`;
             return;
         }
+        appPapers.forEach(paper => {
+            const card = document.createElement('div');
+            card.className = "bg-white p-5 border border-slate-200 rounded-xl shadow-sm hover:shadow-md transition flex flex-col justify-between";
+           let actionBtnHTML = authenticatedUserToken 
+    ? `<button onclick="triggerDownload('${paper.title}', '${paper.filename}')" class="mt-4 w-full bg-[#15803d] text-white hover:bg-[#0b2512] py-2 text-sm font-semibold rounded-lg transition shadow-sm">⬇ Download Document Asset</button>`
+    : `<button onclick="alert('Access Restricted! Please input a verified active ID structural code inside the credential check engine field above.')" class="mt-4 w-full bg-slate-300 text-slate-600 py-2 text-sm font-semibold rounded-lg cursor-not-allowed">🔒 Unlock via ID Credentials</button>`;
 
-        const isOLevel = ["Senior 1", "Senior 2", "Senior 3", "Senior 4"].includes(classSelect);
-        
-        const coreSubjects = ['Biology', 'Mathematics', 'English', 'History', 'Geography', 'Physics', 'Chemistry'];
-
-        if (isOLevel) {
-            levelInput.value = "O-Level";
-            compulsoryLabel.innerText = "Compulsory Subjects (Automatically Registered)";
-            
-            streamSelect.innerHTML = `
-                <option value="">-- Select Stream --</option>
-                <option value="K Stream">K Stream</option>
-                <option value="Q Stream">Q Stream</option>
-                <option value="N Stream">N Stream</option>
-            `;
-
-            compulsoryBox.innerHTML = coreSubjects.map(sub => `
-                <div class="subject-item">
-                    <input type="checkbox" checked disabled>
-                    <span style="font-weight:600; color:#15803d;">${sub}</span>
+            card.innerHTML = `
+                <div>
+                    <span class="inline-block bg-slate-100 text-[#0b2512] font-bold text-[11px] uppercase tracking-wider px-2.5 py-1 rounded-md mb-2 border border-slate-200">${paper.subject}</span>
+                    <h4 class="font-bold text-lg text-slate-800 leading-snug">${paper.title}</h4>
+                    <p class="text-xs text-slate-400 mt-1 font-mono">Resource file: ${paper.filename}</p>
                 </div>
-            `).join('');
-
-        } else {
-            levelInput.value = "A-Level";
-            compulsoryLabel.innerText = "Core Available Subjects (Select Optional Combination Preferences)";
-            
-            streamSelect.innerHTML = `
-                <option value="">-- Select Combination Track --</option>
-                <option value="Sciences">Sciences Track</option>
-                <option value="Arts">Arts Track</option>
+                ${actionBtnHTML}
             `;
-
-            compulsoryBox.innerHTML = coreSubjects.map(sub => `
-                <div class="subject-item">
-                    <input type="checkbox" name="comp_sub_opt" value="${sub.toLowerCase()}">
-                    <span>${sub}</span>
-                </div>
-            `).join('');
-        }
-    }
-
-    function switchForm(type) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.form-container').forEach(c => c.classList.remove('active'));
-        
-        if(type === 'student') {
-            document.querySelectorAll('.tab-btn')[0].classList.add('active');
-            document.getElementById('student-form-pane').classList.add('active');
-        } else {
-            document.querySelectorAll('.tab-btn')[1].classList.add('active');
-            document.getElementById('teacher-form-pane').classList.add('active');
-        }
-    }
-
-    async function loadStaticBlocks() {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/admission_content?select=*`, { headers: getHeaders() });
-            const data = await response.json();
-            
-            data.forEach(item => {
-                if(item.section_key === 'requirements') {
-                    document.getElementById('requirements-content').innerHTML = item.content_value;
-                    document.getElementById('edit-requirements-box').value = item.content_value;
-                }
-                if(item.section_key === 'intake_dates') {
-                    document.getElementById('dates-content').innerHTML = item.content_value;
-                    document.getElementById('edit-dates-box').value = item.content_value;
-                }
-                if(item.section_key === 'fees_policy') {
-                    document.getElementById('fees-content').innerHTML = item.content_value;
-                    document.getElementById('edit-fees-box').value = item.content_value;
-                }
-            });
-        } catch (e) { console.error("Error reading info layouts: ", e); }
-    }
-
-    async function updateContentBlock(key, value) {
-        try {
-            await fetch(`${SUPABASE_URL}/rest/v1/admission_content?section_key=eq.${key}`, {
-                method: 'PATCH',
-                headers: getHeaders(),
-                body: JSON.stringify({ content_value: value })
-            });
-            loadStaticBlocks();
-            alert("Section updated successfully!");
-        } catch(e) { console.error(e); }
-    }
-
-    function verifyAdminAction(pwdInputId) {
-        const inputPass = document.getElementById(pwdInputId).value;
-        if (inputPass === "12345") {
-            return true;
-        } else {
-            alert("Authorization Denied: Invalid Security Password Key.");
-            return false;
-        }
-    }
-
-    function saveRequirementsSecurely() { 
-        if(verifyAdminAction('auth-req-pwd')) {
-            updateContentBlock('requirements', document.getElementById('edit-requirements-box').value); 
-        }
-    }
-    function saveDatesSecurely() { 
-        if(verifyAdminAction('auth-dates-pwd')) {
-            updateContentBlock('intake_dates', document.getElementById('edit-dates-box').value); 
-        }
-    }
-    function saveFeesSecurely() { 
-        if(verifyAdminAction('auth-fees-pwd')) {
-            updateContentBlock('fees_policy', document.getElementById('edit-fees-box').value); 
-        }
-    }
-
-    async function handleFormSubmission(event, formType) {
-        event.preventDefault();
-        let payload = { type: formType };
-
-        if(formType === 'student') {
-            const chosenOptional = [];
-            document.querySelectorAll('input[name="opt_sub"]:checked').forEach(el => chosenOptional.push(el.value));
-            
-            const levelType = document.getElementById('stu-level').value;
-            let chosenCompulsory = [];
-            if(levelType === "O-Level") {
-                chosenCompulsory = ['biology', 'mathematics', 'english', 'history', 'geography', 'physics', 'chemistry'];
-            } else {
-                document.querySelectorAll('input[name="comp_sub_opt"]:checked').forEach(el => chosenCompulsory.push(el.value));
-            }
-
-            payload.metadata = {
-                name: document.getElementById('stu-name').value,
-                class: document.getElementById('stu-class').value,
-                level: levelType,
-                stream_combination: document.getElementById('stu-stream').value,
-                compulsory_subjects: chosenCompulsory,
-                optional_subjects: chosenOptional,
-                phone: document.getElementById('stu-phone').value,
-                scores: document.getElementById('stu-scores').value
-            };
-        } else {
-            const cvFile = document.getElementById('tea-cv-file').files[0];
-            payload.metadata = {
-                name: document.getElementById('tea-name').value,
-                subjects: document.getElementById('tea-subjects').value,
-                knowledge_level: document.getElementById('tea-knowledge-level').value,
-                cv_file_name: cvFile ? cvFile.name : 'N/A',
-                phone: document.getElementById('tea-phone').value,
-                experience: document.getElementById('tea-experience').value
-            };
-        }
-
-        try {
-            const res = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions`, {
-                method: 'POST',
-                headers: getHeaders(),
-                body: JSON.stringify({ 
-                    form_type: payload.type, 
-                    submission_data: payload.metadata,
-                    status: 'Pending'
-                })
-            });
-            
-            if(res.ok) {
-                alert("Application Logged! Redirecting to Verification Portal...");
-                window.location.href = "past-papers.html";
-            } else {
-                alert("Submission failed. Check network components.");
-            }
-        } catch (error) {
-            console.error("Error submitting request:", error);
-        }
-    }
-
-    function challengeGateway() {
-        const uid = document.getElementById('gate-uid').value;
-        const pwd = document.getElementById('gate-pwd').value;
-
-        if (uid === "Dyson J" && pwd === "12345") {
-            document.getElementById('school-main-portal-view').style.display = 'none';
-            document.getElementById('admin-workspace-pane').style.display = 'block';
-            fetchLiveApplications();
-        } else {
-            alert("Security Denied: Invalid Administrative Credentials.");
-        }
-    }
-
-    function terminateWorkspaceSession() {
-        document.getElementById('gate-uid').value = '';
-        document.getElementById('gate-pwd').value = '';
-        document.getElementById('admin-workspace-pane').style.display = 'none';
-        document.getElementById('school-main-portal-view').style.display = 'block';
-    }
-
-    async function fetchLiveApplications() {
-        const container = document.getElementById('application-rows-target');
-        container.innerHTML = `<tr><td colspan="5" style="text-align:center;">Synchronizing records with Supabase database cluster...</td></tr>`;
-        
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions?select=*&order=id.desc`, { headers: getHeaders() });
-            const records = await response.json();
-            
-            if(!records || records.length === 0) {
-                container.innerHTML = `<tr><td colspan="5" style="text-align:center;">No processing rows active inside the table ledger.</td></tr>`;
-                return;
-            }
-
-            container.innerHTML = '';
-            records.forEach(row => {
-                let innerDetails = '';
-                const data = row.submission_data || {};
-                
-                if (row.form_type === 'student') {
-                    innerDetails = `<strong>Name:</strong> ${data.name || 'N/A'}<br>
-                                    <strong>Class:</strong> ${data.class || 'N/A'} (${data.level || 'N/A'})<br>
-                                    <strong>Track:</strong> ${data.stream_combination || 'N/A'}<br>
-                                    <strong>Core Subs:</strong> ${(data.compulsory_subjects || []).join(', ') || 'None'}<br>
-                                    <strong>Electives:</strong> ${(data.optional_subjects || []).join(', ') || 'None'}<br>
-                                    <strong>Phone:</strong> ${data.phone || 'N/A'}<br>
-                                    <strong>Scores:</strong> ${data.scores || 'N/A'}`;
-                } else {
-                    innerDetails = `<strong>Name:</strong> ${data.name || 'N/A'}<br>
-                                    <strong>Subjects:</strong> ${data.subjects || 'N/A'}<br>
-                                    <strong>Tier:</strong> ${data.knowledge_level || 'N/A'}<br>
-                                    <strong>CV File:</strong> 📄 ${data.cv_file_name || 'N/A'}<br>
-                                    <strong>Phone:</strong> ${data.phone || 'N/A'}<br>
-                                    <strong>Experience:</strong> ${data.experience || 'N/A'}`;
-                }
-
-                const currentStatus = row.status || 'Pending';
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${row.id}</td>
-                    <td><span class="badge">${row.form_type.toUpperCase()}</span></td>
-                    <td>${innerDetails}</td>
-                    <td><span class="status-badge status-${currentStatus}">${currentStatus}</span></td>
-                    <td>
-                        <button class="action-approve-btn" onclick="executeDecision(${row.id}, 'Approved')">Approve</button>
-                        <button class="action-deny-btn" onclick="executeDecision(${row.id}, 'Deny')">Deny</button>
-                    </td>
-                `;
-                container.appendChild(tr);
-            });
-        } catch (error) {
-            container.innerHTML = `<tr><td colspan="5" style="text-align:center; color:red;">Database Connection Fault: Unable to sync metrics.</td></tr>`;
-            console.error(error);
-        }
-    }
-
-   async function executeDecision(recordId, finalVerdict) {
-    try {
-        // 1. Fetch the specific record first to get the phone number and applicant name
-        const fetchRes = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions?id=eq.${recordId}&select=*`, { headers: getHeaders() });
-        const records = await fetchRes.json();
-        
-        if (!records || records.length === 0) {
-            alert("Record not found.");
-            return;
-        }
-
-        const applicant = records[0];
-        const phone = applicant.submission_data?.phone;
-        const name = applicant.submission_data?.name || "Applicant";
-
-        // 2. Craft the exact 56-word message based on the status
-        let messageText = "";
-        if (finalVerdict === 'Approved') {
-            messageText = `Congratulations ${name}! We are thrilled to inform you that your application to Namboole High School has been officially approved. You have taken a monumental step toward achieving academic excellence, discipline, and outstanding leadership with us. Please log back into your digital admissions student portal desk immediately to review your onboarding instructions, final clearance requirements, and scheduled reporting dates. Welcome to our family!`;
-        } else {
-            messageText = `Dear ${name}, thank you for your profound interest in joining Namboole High School. Regrettably, after careful evaluation of our competitive applicant stream and available capacities this academic intake period, we are unable to offer you admission at this time. We sincerely appreciate the time you invested in completing our application process and wish you the absolute best in your future educational endeavors.`;
-        }
-
-        // Verify word count safety check (approximate check, exactly structured)
-        console.log(`Generated message length: ${messageText.split(/\s+/).length} words.`);
-
-        // 3. Update the database status first
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions?id=eq.${recordId}`, {
-            method: 'PATCH',
-            headers: getHeaders(),
-            body: JSON.stringify({ status: finalVerdict })
+            grid.appendChild(card);
         });
-        
-        if (response.ok) {
-            // 4. Trigger SMS API integration (Example using a hypothetical backend/SMS endpoint)
-            if (phone) {
-                await sendSmsNotification(phone, messageText);
-            }
-            fetchLiveApplications();
-        } else {
-            alert("Decision update rejected by cloud database schema parameters.");
-        }
-    } catch (error) {
-        console.error("Admissions patch runtime fault:", error);
     }
-}
 
-// Helper function to interface with your SMS gateway backend
-async function sendSmsNotification(phoneNumber, message) {
-    try {
-        // Replace this URL with your secure backend endpoint or Edge Function URL that holds your SMS API keys
-        const smsEndpoint = "https://your-backend-or-supabase-edge-function.com/send-sms";
-        
-        await fetch(smsEndpoint, {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ phone: phoneNumber, message: message })
+    function renderAdminDashboard() {
+        const credList = document.getElementById('credentials-list');
+        credList.innerHTML = '';
+        appCredentials.forEach((cred, index) => {
+            const item = document.createElement('div');
+            item.className = "flex justify-between items-center bg-white border p-2 rounded mb-1 text-slate-700 font-mono text-xs";
+            item.innerHTML = `<span>${cred}</span><button onclick="revokeCredential('${cred}')" class="text-red-500 hover:text-red-700 font-bold">Revoke</button>`;
+            credList.appendChild(item);
         });
-        console.log(`SMS dispatched to ${phoneNumber}`);
+
+        const tableBody = document.getElementById('admin-table-body');
+        tableBody.innerHTML = '';
+        appPapers.forEach((paper, index) => {
+            const row = document.createElement('tr');
+            row.className = "border-b hover:bg-slate-50 transition";
+            row.innerHTML = `
+                <td class="p-3 font-semibold text-slate-800">${paper.subject}</td>
+                <td class="p-3"><input type="text" id="edit-title-${paper.id}" value="${paper.title}" class="w-full border p-2 rounded text-sm focus:ring-1 focus:ring-[#15803d]"></td>
+                <td class="p-3 font-mono text-xs text-slate-500">${paper.filename}</td>
+                <td class="p-3 text-center flex justify-center items-center gap-2">
+                    <button onclick="commitTitleUpdate('${paper.id}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded hover:bg-emerald-700 text-xs font-bold">✓ Save</button>
+                    <button onclick="purgeDocumentAsset('${paper.id}')" class="bg-red-500 text-white px-2.5 py-1.5 rounded hover:bg-red-700 text-xs font-bold">✕ Delete</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+
+    async function registerUser() {
+        const input = document.getElementById('new-user-id');
+        const value = input.value.trim().toUpperCase();
+        if (!value) return alert("Please specify a targeted User Credential configuration.");
+        
+        const { error } = await supabaseClient.from('nhs_credentials').insert([{ credential: value }]);
+        if (error) return alert("Error issuing credential: " + error.message);
+
+        input.value = '';
+        await fetchAppData();
+        renderAdminDashboard();
+    }
+
+    async function revokeCredential(credValue) {
+        const { error } = await supabaseClient.from('nhs_credentials').delete().eq('credential', credValue);
+        if (error) return alert("Error revoking: " + error.message);
+
+        await fetchAppData();
+        renderAdminDashboard();
+    }
+
+    async function uploadPaper() {
+        const titleInput = document.getElementById('paper-title');
+        const subjectInput = document.getElementById('subject-select');
+        const fileInput = document.getElementById('paper-file');
+
+        if (!titleInput.value.trim()) return alert("Please clarify file description parameters.");
+        let filename = "uploaded_document.pdf";
+        if (fileInput.files.length > 0) filename = fileInput.files[0].name;
+
+        const { error } = await supabaseClient.from('nhs_papers').insert([{
+            subject: subjectInput.value,
+            title: titleInput.value.trim(),
+            filename: filename
+        }]);
+
+        if (error) return alert("Upload failed: " + error.message);
+
+        titleInput.value = '';
+        fileInput.value = '';
+        await fetchAppData();
+        renderAdminDashboard();
+        renderPublicLibrary();
+        alert("Asset integrated successfully.");
+    }
+
+    async function commitTitleUpdate(id) {
+        const updatedTitle = document.getElementById(`edit-title-${id}`).value.trim();
+        if (!updatedTitle) return alert("Description cannot evaluate empty values.");
+        
+        const { error } = await supabaseClient.from('nhs_papers').update({ title: updatedTitle }).eq('id', id);
+        if (error) return alert("Update failed: " + error.message);
+
+        await fetchAppData();
+        renderAdminDashboard();
+        renderPublicLibrary();
+        alert("Description modified successfully.");
+    }
+
+    async function purgeDocumentAsset(id) {
+        if (confirm("Permanently delete this entry?")) {
+            const { error } = await supabaseClient.from('nhs_papers').delete().eq('id', id);
+            if (error) return alert("Delete failed: " + error.message);
+
+            await fetchAppData();
+            renderAdminDashboard();
+            renderPublicLibrary();
+        }
+    }
+
+   async function triggerDownload(title, filename) {
+    const buttonElement = event.target;
+    const originalText = buttonElement.innerText;
+    
+    // Provide instant visual feedback
+    buttonElement.innerText = "⏳ Preparing Download...";
+    buttonElement.disabled = true;
+
+    try {
+        // Fetch public URL from Supabase Storage bucket 'past-papers'
+        const { data, error } = supabaseClient
+            .storage
+            .from('past-papers')
+            .getPublicUrl(filename);
+
+        if (error) throw error;
+        
+        const fileUrl = data.publicUrl;
+
+        // Fetch the file as a blob to force download instead of opening in a new tab
+        const response = await fetch(fileUrl);
+        if (!response.ok) throw new Error("Network response failed.");
+        
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        
+        // Create a temporary hidden anchor to trigger smooth client-side download
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        
+        // Clean up temporary DOM objects
+        window.URL.revokeObjectURL(blobUrl);
+        document.body.removeChild(a);
+
     } catch (err) {
-        console.error("Failed to dispatch SMS notification: ", err);
+        console.error("Download error:", err);
+        alert("Failed to download document. Please verify the file exists on the server.");
+    } finally {
+        // Restore button state
+        buttonElement.innerText = originalText;
+        buttonElement.disabled = false;
     }
 }
-async function executeDecision(recordId, finalVerdict) {
-    try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions?id=eq.${recordId}`, {
-            method: 'PATCH',
-            headers: getHeaders(),
-            body: JSON.stringify({ status: finalVerdict })
-        });
-        
-        if(response.ok) {
-            // Refreshes the active stream table so name/status shifts smoothly
-            fetchLiveApplications();
-            alert(`Application #${recordId} successfully marked as ${finalVerdict}. Logged to permanent records database.`);
-        } else {
-            alert("Decision update rejected by cloud database schema parameters.");
-        }
-    } catch (error) {
-        console.error("Admissions patch runtime fault:", error);
+async function uploadPaper() {
+    const titleInput = document.getElementById('paper-title');
+    const subjectInput = document.getElementById('subject-select');
+    const fileInput = document.getElementById('paper-file');
+
+    if (!titleInput.value.trim()) return alert("Please clarify file description parameters.");
+    if (fileInput.files.length === 0) return alert("Please select a file from your device to upload.");
+
+    const file = fileInput.files[0];
+    // Sanitize the file name to avoid path/space errors in Supabase storage
+    const sanitizedFileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+
+    // 1. Upload the raw file directly to the Supabase Storage 'past-papers' bucket
+    const { data: storageData, error: storageError } = await supabaseClient
+        .storage
+        .from('past-papers')
+        .upload(sanitizedFileName, file);
+
+    if (storageError) {
+        return alert("Failed to upload file to Supabase Storage: " + storageError.message);
     }
+
+    // 2. Insert the metadata record into the nhs_papers database table
+    const { error: dbError } = await supabaseClient.from('nhs_papers').insert([{
+        subject: subjectInput.value,
+        title: titleInput.value.trim(),
+        filename: sanitizedFileName // Stores the exact identifier needed for getPublicUrl
+    }]);
+
+    if (dbError) {
+        // Rollback storage file if database entry fails
+        await supabaseClient.storage.from('past-papers').remove([sanitizedFileName]);
+        return alert("Failed to save paper metadata to database: " + dbError.message);
+    }
+
+    // Reset inputs and refresh views
+    titleInput.value = '';
+    fileInput.value = '';
+    await fetchAppData();
+    renderAdminDashboard();
+    renderPublicLibrary();
+    alert("Document uploaded and registered successfully.");
+}
+
+async function purgeDocumentAsset(id, filename) {
+    if (confirm("Permanently delete this entry and its file from the server?")) {
+        // 1. Remove the file binary from the storage bucket
+        const { error: storageError } = await supabaseClient
+            .storage
+            .from('past-papers')
+            .remove([filename]);
+
+        if (storageError) {
+            console.warn("Storage deletion warning: " + storageError.message);
+        }
+
+        // 2. Remove the row from the database table
+        const { error: dbError } = await supabaseClient.from('nhs_papers').delete().eq('id', id);
+        if (dbError) return alert("Database delete failed: " + dbError.message);
+
+        await fetchAppData();
+        renderAdminDashboard();
+        renderPublicLibrary();
+    }
+}
+
+function renderAdminDashboard() {
+    const credList = document.getElementById('credentials-list');
+    credList.innerHTML = '';
+    appCredentials.forEach((cred) => {
+        const item = document.createElement('div');
+        item.className = "flex justify-between items-center bg-white border p-2 rounded mb-1 text-slate-700 font-mono text-xs";
+        item.innerHTML = `<span>${cred}</span><button onclick="revokeCredential('${cred}')" class="text-red-500 hover:text-red-700 font-bold">Revoke</button>`;
+        credList.appendChild(item);
+    });
+
+    const tableBody = document.getElementById('admin-table-body');
+    tableBody.innerHTML = '';
+    appPapers.forEach((paper) => {
+        const row = document.createElement('tr');
+        row.className = "border-b hover:bg-slate-50 transition";
+        // Ensure purgeDocumentAsset passes both ID and filename correctly
+        row.innerHTML = `
+            <td class="p-3 font-semibold text-slate-800">${paper.subject}</td>
+            <td class="p-3"><input type="text" id="edit-title-${paper.id}" value="${paper.title}" class="w-full border p-2 rounded text-sm focus:ring-1 focus:ring-[#15803d]"></td>
+            <td class="p-3 font-mono text-xs text-slate-500">${paper.filename}</td>
+            <td class="p-3 text-center flex justify-center items-center gap-2">
+                <button onclick="commitTitleUpdate('${paper.id}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded hover:bg-emerald-700 text-xs font-bold">✓ Save</button>
+                <button onclick="purgeDocumentAsset('${paper.id}', '${paper.filename}')" class="bg-red-500 text-white px-2.5 py-1.5 rounded hover:bg-red-700 text-xs font-bold">✕ Delete</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
 }
 </script>
 </body>

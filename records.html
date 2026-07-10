@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Admission Records - Namboole High School</title>
+    <link rel="icon" type="image/jpeg" href="badge.jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { line-height: 1.6; color: #1e293b; background-color: #f8fafc; margin: 0; padding: 0; }
+        header { background: linear-gradient(135deg, #07190c 0%, #0b2512 100%); color: #ffffff; padding: 25px 40px; border-bottom: 5px solid #facc15; }
+        .header-container { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+        .school-title h1 { margin: 0; font-size: 28px; color: #ffffff; font-weight: 700; }
+        .school-title p { margin: 5px 0 0 0; color: #facc15; font-size: 12px; text-transform: uppercase; font-weight: 700; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .card { background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; border-top: 5px solid #15803d; }
+        .btn-black { background-color: #0f172a; color: #facc15; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: 600; display: inline-block; border: none; cursor: pointer; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+        th { background-color: #0f172a; color: #facc15; text-align: left; padding: 14px 16px; font-size: 14px; }
+        td { padding: 14px 16px; border-bottom: 1px solid #e2e8f0; font-size: 14px; color: #334155; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .status-Approved { background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 12px; }
+        .status-Denied { background: #fee2e2; color: #991b1b; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 12px; }
+        footer { background-color: #0f172a; color: #94a3b8; padding: 30px 20px; text-align: center; font-size: 13px; margin-top: 60px; border-top: 5px solid #15803d; }
+        footer a { color: #facc15; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="school-title">
+                <h1>NAMBOOLE HIGH SCHOOL</h1>
+                <p>Master Registry & Decided Admissions</p>
+            </div>
+            <button class="btn-black" onclick="window.location.href='admissions.html'">Back to Portal ➔</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>Archived Decisions Registry</h2>
+            <p>Official record list reflecting all successfully approved and processed or denied applicant submissions.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Category</th>
+                        <th>Candidate / Professional Name</th>
+                        <th>Contact Line</th>
+                        <th>Final Decision Status</th>
+                    </tr>
+                </thead>
+                <tbody id="decided-records-target">
+                    <tr><td colspan="5" style="text-align:center;">Loading processed database logs...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Namboole High School. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const SUPABASE_URL = "https://uxhjulraredskkgghfav.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_oxLVKxNQJtNBo4pn6cvGuQ_1Hk56B3L";
+
+        function getHeaders() {
+            return {
+                "apikey": SUPABASE_KEY,
+                "Authorization": `Bearer ${SUPABASE_KEY}`,
+                "Content-Type": "application/json"
+            };
+        }
+
+        window.onload = function() {
+            loadDecidedRecords();
+        };
+
+        async function loadDecidedRecords() {
+            const target = document.getElementById('decided-records-target');
+            try {
+                // Filter rows where status is NOT Pending
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions?status=neq.Pending&select=*&order=id.desc`, { headers: getHeaders() });
+                const rows = await res.json();
+
+                if (!rows || rows.length === 0) {
+                    target.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#64748b;">No approved or denied applicant logs found in storage.</td></tr>`;
+                    return;
+                }
+
+                target.innerHTML = '';
+                rows.forEach(r => {
+                    const data = r.submission_data || {};
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${r.id}</td>
+                        <td style="text-transform:uppercase; font-weight:600;">${r.form_type}</td>
+                        <td><strong>${data.name || 'N/A'}</strong></td>
+                        <td>${data.phone || 'N/A'}</td>
+                        <td><span class="status-${r.status}">${r.status}</span></td>
+                    `;
+                    target.appendChild(tr);
+                });
+            } catch(e) {
+                target.innerHTML = `<tr><td colspan="5" style="text-align:center; color:red;">Failed to retrieve active records table.</td></tr>`;
+                console.error(e);
+            }
+        }
+    </script>
+</body>
+</html>

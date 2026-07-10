@@ -590,6 +590,45 @@
         buttonElement.disabled = false;
     }
 }
+async function uploadPaper() {
+    const titleInput = document.getElementById('paper-title');
+    const subjectInput = document.getElementById('subject-select');
+    const fileInput = document.getElementById('paper-file');
+
+    if (!titleInput.value.trim()) return alert("Please clarify file description parameters.");
+    if (fileInput.files.length === 0) return alert("Please select a file to upload!");
+
+    const file = fileInput.files[0];
+    const filename = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`; // Sanitize file name with timestamp
+
+    // 1. Upload actual file binary to Supabase Storage Bucket 'past-papers'
+    const { data: storageData, error: storageError } = await supabaseClient
+        .storage
+        .from('past-papers')
+        .upload(filename, file);
+
+    if (storageError) {
+        return alert("Storage upload failed: " + storageError.message);
+    }
+
+    // 2. Insert metadata (subject, title, filename) into the database table
+    const { error: dbError } = await supabaseClient.from('nhs_papers').insert([{
+        subject: subjectInput.value,
+        title: titleInput.value.trim(),
+        filename: filename // This matches the exact path stored in storage
+    }]);
+
+    if (dbError) {
+        return alert("Database record failed: " + dbError.message);
+    }
+
+    titleInput.value = '';
+    fileInput.value = '';
+    await fetchAppData();
+    renderAdminDashboard();
+    renderPublicLibrary();
+    alert("Asset integrated and uploaded successfully.");
+}
 </script>
 </body>
 </html>

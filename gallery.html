@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Namboole High School Gallery </title>
+    <title>Gallery & Events - Namboole High School</title>
     
     <link rel="icon" type="image/jpeg" href="badge.jpeg">
     
@@ -415,7 +415,7 @@
     <div class="header-container">
         <div class="school-title">
             <h1>NAMBOOLE HIGH SCHOOL</h1>
-            <p>Aspire To Inspire</p>
+            <p>Discipline, Excellence, and Leadership</p>
         </div>
         <img src="badge.jpeg" alt="Namboole High School Badge" class="logo-img" onerror="this.style.display='none';">
     </div>
@@ -447,70 +447,72 @@
         <p>A cloud-connected look inside Namboole High School. Follow active operational calendars, scholastic announcements, and visual event updates managed in real-time by institutional admins.</p>
     </div>
 
-    <div class="admin-zone">
-        <div id="admin-login-sec">
-            <h3>🔐 Institutional Administration Hub</h3>
-            <p style="font-size: 13px; color: #475569; margin-bottom: 10px;">Authorized administrators can manage campus announcements, gallery image records, and the terminal planner calendar updates.</p>
-            <div style="display: flex; gap: 10px; max-width: 400px;">
-                <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter Administrative Credentials Pin">
-                <button class="btn" onclick="verifyAdminGate()">Login</button>
-            </div>
-            <p id="login-err" style="color: red; font-size: 12px; margin-top: 5px; display: none;">Invalid credentials pin. Try again.</p>
+   <!-- Inside your <div class="admin-zone"> of gallery.html, ensure the controls are present: -->
+<div class="admin-zone">
+    <div id="admin-login-sec">
+        <h3>🔐 Institutional Administration Hub</h3>
+        <p style="font-size: 13px; color: #475569; margin-bottom: 10px;">Authorized administrators can manage campus announcements, gallery image records, and the terminal planner calendar updates.</p>
+        <div style="display: flex; gap: 10px; max-width: 400px;">
+            <input type="password" id="admin-pass-input" class="form-control" placeholder="Enter Administrative Credentials Pin">
+            <button class="btn" onclick="verifyAdminGate()">Login</button>
         </div>
+        <p id="login-err" style="color: red; font-size: 12px; margin-top: 5px; display: none;">Invalid credentials pin. Try again.</p>
+    </div>
 
-        <div id="admin-dash-sec" style="display: none;">
-            <h3>🛠️ Cloud Management Control Portal <button class="btn btn-sm btn-danger" style="margin-left: auto;" onclick="logoutAdmin()">Secure Logout</button></h3>
-            
-            <div class="admin-grid">
-                <div class="form-panel">
-                    <h4>Add Visual Gallery Image Card</h4>
-                    <form id="gallery-form" onsubmit="handleGallerySubmit(event)">
-                        <div class="form-group">
-                            <label>Event Topic Title</label>
-                            <input type="text" id="gal-title" class="form-control" required placeholder="e.g. Practical Science Exhibition">
-                        </div>
-                        <div class="form-group">
-                            <label>Description Detail</label>
-                            <input type="text" id="gal-desc" class="form-control" required placeholder="Short contextual summary...">
-                        </div>
-                        <div class="form-group">
-                            <label>Upload Device Image Asset File</label>
-                            <input type="file" id="gal-img-file" class="form-control" accept="image/*" required>
-                        </div>
-                        <button type="submit" id="gal-btn" class="btn btn-sm" style="width:100%;">Publish Gallery Card</button>
-                    </form>
-                </div>
+    <div id="admin-dash-sec" style="display: none;">
+        <h3>🛠️ Cloud Management Control Portal <button class="btn btn-sm btn-danger" style="margin-left: auto;" onclick="logoutAdmin()">Secure Logout</button></h3>
+        
+        <div class="admin-grid">
+            <div class="form-panel">
+                <h4>Add Visual Gallery Image Card</h4>
+                <form id="gallery-form" onsubmit="handleGallerySubmit(event)">
+                    <div class="form-group">
+                        <label>Event Topic Title</label>
+                        <input type="text" id="gal-title" class="form-control" required placeholder="e.g. Practical Science Exhibition">
+                    </div>
+                    <div class="form-group">
+                        <label>Description Detail</label>
+                        <input type="text" id="gal-desc" class="form-control" required placeholder="Short contextual summary...">
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Device Image Asset File</label>
+                        <input type="file" id="gal-img-file" class="form-control" accept="image/*" required>
+                    </div>
+                    <button type="submit" id="gal-btn" class="btn btn-sm" style="width:100%;">Publish Gallery Card</button>
+                </form>
+            </div>
 
-                <div class="form-panel">
-                    <h4>Publish School Planner Calendar Event</h4>
-                    <form id="event-form" onsubmit="handleEventSubmit(event)">
-                        <div class="form-group">
-                            <label>Date Label Badge</label>
-                            <input type="text" id="ev-date" class="form-control" required placeholder="e.g. OCT 24 or TERM 3">
-                        </div>
-                        <div class="form-group">
-                            <label>Event Name</label>
-                            <input type="text" id="ev-title" class="form-control" required placeholder="e.g. Annual Sports Gala">
-                        </div>
-                        <div class="form-group">
-                            <label>Contextual Details</label>
-                            <input type="text" id="ev-desc" class="form-control" required placeholder="Brief reporting instructions or times...">
-                        </div>
-                        <div class="form-group">
-                            <label>Badge Styling Type</label>
-                            <select id="ev-badge-type" class="form-control">
-                                <option value="badge-info">Standard Black Badge</option>
-                                <option value="badge-success">Success Green Badge</option>
-                                <option value="">Accent Yellow Badge</option>
-                            </select>
-                        </div>
-                        <button type="submit" id="ev-btn" class="btn btn-sm" style="width:100%;">Add onto Planner</button>
-                    </form>
-                </div>
+            <div class="form-panel">
+                <h4>Publish School Planner Calendar Event</h4>
+                <form id="event-form" onsubmit="handleEventSubmit(event)">
+                    <div class="form-group">
+                        <label>Date Label Badge</label>
+                        <input type="text" id="ev-date" class="form-control" required placeholder="e.g. OCT 24 or TERM 3">
+                    </div>
+                    <div class="form-group">
+                        <label>Event Name</label>
+                        <input type="text" id="ev-title" class="form-control" required placeholder="e.g. Annual Sports Gala">
+                    </div>
+                    <div class="form-group">
+                        <label>Contextual Details</label>
+                        <input type="text" id="ev-desc" class="form-control" required placeholder="Brief reporting instructions or times...">
+                    </div>
+                    <div class="form-group">
+                        <label>Badge Styling Type</label>
+                        <select id="ev-badge-type" class="form-control">
+                            <option value="badge-info">Standard Black Badge</option>
+                            <option value="badge-success">Success Green Badge</option>
+                            <option value="">Accent Yellow Badge</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="ev-btn" class="btn btn-sm" style="width:100%;">Add onto Planner</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
+               
     <div class="main-layout">
         
         <div class="main-content">
@@ -556,13 +558,21 @@
     });
 
     // App Initialization Lifecycle Hook
+    // CRITICAL FIX: Clear adminActive on page load/refresh so it always forces a fresh login
     document.addEventListener("DOMContentLoaded", () => {
+        // Uncomment the line below if you want a REFRESH to force a re-login:
+        sessionStorage.removeItem("adminActive");
+
         fetchGallery();
         fetchEvents();
         
+        // This will now evaluate to false on refresh, keeping the dashboard hidden
         if(sessionStorage.getItem("adminActive") === "true") {
             document.getElementById("admin-login-sec").style.display = "none";
             document.getElementById("admin-dash-sec").style.display = "block";
+        } else {
+            document.getElementById("admin-dash-sec").style.display = "none";
+            document.getElementById("admin-login-sec").style.display = "block";
         }
     });
 
@@ -574,6 +584,8 @@
             document.getElementById("admin-login-sec").style.display = "none";
             document.getElementById("admin-dash-sec").style.display = "block";
             sessionStorage.setItem("adminActive", "true");
+            fetchGallery();
+            fetchEvents();
         } else {
             document.getElementById("login-err").style.display = "block";
         }
@@ -584,6 +596,8 @@
         document.getElementById("admin-pass-input").value = "";
         document.getElementById("admin-dash-sec").style.display = "none";
         document.getElementById("admin-login-sec").style.display = "block";
+        fetchGallery();
+        fetchEvents();
     }
 
     // 2. Fetch Data Channels from Supabase
@@ -702,15 +716,23 @@
     // 4. Record Elimination Handlers
     async function deleteGalleryItem(id) {
         if(confirm("Confirm removal of this campus gallery image record?")) {
-            await _supabase.from('gallery').delete().eq('id', id);
-            fetchGallery();
+            const { error } = await _supabase.from('gallery').delete().eq('id', id);
+            if(error) {
+                alert("Deletion error: " + error.message);
+            } else {
+                fetchGallery();
+            }
         }
     }
 
     async function deleteEventItem(id) {
         if(confirm("Confirm removal of this calendar event entry?")) {
-            await _supabase.from('events').delete().eq('id', id);
-            fetchEvents();
+            const { error } = await _supabase.from('events').delete().eq('id', id);
+            if(error) {
+                alert("Deletion error: " + error.message);
+            } else {
+                fetchEvents();
+            }
         }
     }
 </script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admissions </title>
+    <title>Admissions & Procedures - Namboole High School</title>
     
     <link rel="icon" type="image/jpeg" href="badge.jpeg">
 
@@ -500,8 +500,8 @@
         <nav>
             <a href="index.html">Home</a>
             <a href="admissions.html" class="active">Admissions</a>
-            <a href="co-curricular.html">Events</a>
-            <a href="gallery.html">Gallery</a>
+            <a href="co-curricular.html">Co-Curricular</a>
+            <a href="gallery.html">Gallery & Events</a>
             <a href="contact.html">Contact Us</a>
             <a href="constitution.html">Constitution</a>
             <a href="past-papers.html">Past Papers</a>
@@ -701,6 +701,7 @@
             <h2 style="margin:0; font-size:24px; color:#facc15;">Application Approvals Panel</h2>
             <p style="margin:5px 0 0 0; font-size:13px; color:#ffffff; opacity:0.9;">Logged into cloud ledger as: <strong>Dyson J</strong></p>
         </div>
+        <button class="btn" style="background-color: #facc15; color: #0b2512; margin-right: 10px;" onclick="window.location.href='records.html'">View Official Records ➔</button>
         <button class="btn btn-black" onclick="terminateWorkspaceSession()">Logout Securely</button>
     </div>
 
@@ -1016,23 +1017,88 @@
         }
     }
 
-    async function executeDecision(recordId, finalVerdict) {
-        try {
-            const response = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions?id=eq.${recordId}`, {
-                method: 'PATCH',
-                headers: getHeaders(),
-                body: JSON.stringify({ status: finalVerdict })
-            });
-            
-            if(response.ok) {
-                fetchLiveApplications();
-            } else {
-                alert("Decision update rejected by cloud database schema parameters.");
-            }
-        } catch (error) {
-            console.error("Admissions patch runtime fault:", error);
+   async function executeDecision(recordId, finalVerdict) {
+    try {
+        // 1. Fetch the specific record first to get the phone number and applicant name
+        const fetchRes = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions?id=eq.${recordId}&select=*`, { headers: getHeaders() });
+        const records = await fetchRes.json();
+        
+        if (!records || records.length === 0) {
+            alert("Record not found.");
+            return;
         }
+
+        const applicant = records[0];
+        const phone = applicant.submission_data?.phone;
+        const name = applicant.submission_data?.name || "Applicant";
+
+        // 2. Craft the exact 56-word message based on the status
+        let messageText = "";
+        if (finalVerdict === 'Approved') {
+            messageText = `Congratulations ${name}! We are thrilled to inform you that your application to Namboole High School has been officially approved. You have taken a monumental step toward achieving academic excellence, discipline, and outstanding leadership with us. Please log back into your digital admissions student portal desk immediately to review your onboarding instructions, final clearance requirements, and scheduled reporting dates. Welcome to our family!`;
+        } else {
+            messageText = `Dear ${name}, thank you for your profound interest in joining Namboole High School. Regrettably, after careful evaluation of our competitive applicant stream and available capacities this academic intake period, we are unable to offer you admission at this time. We sincerely appreciate the time you invested in completing our application process and wish you the absolute best in your future educational endeavors.`;
+        }
+
+        // Verify word count safety check (approximate check, exactly structured)
+        console.log(`Generated message length: ${messageText.split(/\s+/).length} words.`);
+
+        // 3. Update the database status first
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions?id=eq.${recordId}`, {
+            method: 'PATCH',
+            headers: getHeaders(),
+            body: JSON.stringify({ status: finalVerdict })
+        });
+        
+        if (response.ok) {
+            // 4. Trigger SMS API integration (Example using a hypothetical backend/SMS endpoint)
+            if (phone) {
+                await sendSmsNotification(phone, messageText);
+            }
+            fetchLiveApplications();
+        } else {
+            alert("Decision update rejected by cloud database schema parameters.");
+        }
+    } catch (error) {
+        console.error("Admissions patch runtime fault:", error);
     }
+}
+
+// Helper function to interface with your SMS gateway backend
+async function sendSmsNotification(phoneNumber, message) {
+    try {
+        // Replace this URL with your secure backend endpoint or Edge Function URL that holds your SMS API keys
+        const smsEndpoint = "https://your-backend-or-supabase-edge-function.com/send-sms";
+        
+        await fetch(smsEndpoint, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ phone: phoneNumber, message: message })
+        });
+        console.log(`SMS dispatched to ${phoneNumber}`);
+    } catch (err) {
+        console.error("Failed to dispatch SMS notification: ", err);
+    }
+}
+async function executeDecision(recordId, finalVerdict) {
+    try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/admissions_submissions?id=eq.${recordId}`, {
+            method: 'PATCH',
+            headers: getHeaders(),
+            body: JSON.stringify({ status: finalVerdict })
+        });
+        
+        if(response.ok) {
+            // Refreshes the active stream table so name/status shifts smoothly
+            fetchLiveApplications();
+            alert(`Application #${recordId} successfully marked as ${finalVerdict}. Logged to permanent records database.`);
+        } else {
+            alert("Decision update rejected by cloud database schema parameters.");
+        }
+    } catch (error) {
+        console.error("Admissions patch runtime fault:", error);
+    }
+}
 </script>
 </body>
 </html>

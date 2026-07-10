@@ -596,38 +596,93 @@ async function uploadPaper() {
     const fileInput = document.getElementById('paper-file');
 
     if (!titleInput.value.trim()) return alert("Please clarify file description parameters.");
-    if (fileInput.files.length === 0) return alert("Please select a file to upload!");
+    if (fileInput.files.length === 0) return alert("Please select a file from your device to upload.");
 
     const file = fileInput.files[0];
-    const filename = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`; // Sanitize file name with timestamp
+    // Sanitize the file name to avoid path/space errors in Supabase storage
+    const sanitizedFileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
 
-    // 1. Upload actual file binary to Supabase Storage Bucket 'past-papers'
+    // 1. Upload the raw file directly to the Supabase Storage 'past-papers' bucket
     const { data: storageData, error: storageError } = await supabaseClient
         .storage
         .from('past-papers')
-        .upload(filename, file);
+        .upload(sanitizedFileName, file);
 
     if (storageError) {
-        return alert("Storage upload failed: " + storageError.message);
+        return alert("Failed to upload file to Supabase Storage: " + storageError.message);
     }
 
-    // 2. Insert metadata (subject, title, filename) into the database table
+    // 2. Insert the metadata record into the nhs_papers database table
     const { error: dbError } = await supabaseClient.from('nhs_papers').insert([{
         subject: subjectInput.value,
         title: titleInput.value.trim(),
-        filename: filename // This matches the exact path stored in storage
+        filename: sanitizedFileName // Stores the exact identifier needed for getPublicUrl
     }]);
 
     if (dbError) {
-        return alert("Database record failed: " + dbError.message);
+        // Rollback storage file if database entry fails
+        await supabaseClient.storage.from('past-papers').remove([sanitizedFileName]);
+        return alert("Failed to save paper metadata to database: " + dbError.message);
     }
 
+    // Reset inputs and refresh views
     titleInput.value = '';
     fileInput.value = '';
     await fetchAppData();
     renderAdminDashboard();
     renderPublicLibrary();
-    alert("Asset integrated and uploaded successfully.");
+    alert("Document uploaded and registered successfully.");
+}
+
+async function purgeDocumentAsset(id, filename) {
+    if (confirm("Permanently delete this entry and its file from the server?")) {
+        // 1. Remove the file binary from the storage bucket
+        const { error: storageError } = await supabaseClient
+            .storage
+            .from('past-papers')
+            .remove([filename]);
+
+        if (storageError) {
+            console.warn("Storage deletion warning: " + storageError.message);
+        }
+
+        // 2. Remove the row from the database table
+        const { error: dbError } = await supabaseClient.from('nhs_papers').delete().eq('id', id);
+        if (dbError) return alert("Database delete failed: " + dbError.message);
+
+        await fetchAppData();
+        renderAdminDashboard();
+        renderPublicLibrary();
+    }
+}
+
+function renderAdminDashboard() {
+    const credList = document.getElementById('credentials-list');
+    credList.innerHTML = '';
+    appCredentials.forEach((cred) => {
+        const item = document.createElement('div');
+        item.className = "flex justify-between items-center bg-white border p-2 rounded mb-1 text-slate-700 font-mono text-xs";
+        item.innerHTML = `<span>${cred}</span><button onclick="revokeCredential('${cred}')" class="text-red-500 hover:text-red-700 font-bold">Revoke</button>`;
+        credList.appendChild(item);
+    });
+
+    const tableBody = document.getElementById('admin-table-body');
+    tableBody.innerHTML = '';
+    appPapers.forEach((paper) => {
+        const row = document.createElement('tr');
+        row.className = "border-b hover:bg-slate-50 transition";
+        // Ensure purgeDocumentAsset passes both ID and filename correctly
+        row.innerHTML = `
+            <td class="p-3 font-semibold text-slate-800">${paper.subject}</td>
+            <td class="p-3"><input type="text" id="edit-title-${paper.id}" value="${paper.title}" class="w-full border p-2 rounded text-sm focus:ring-1 focus:ring-[#15803d]"></td>
+            <td class="p-3 font-mono text-xs text-slate-500">${paper.filename}</td>
+            <td class="p-3 text-center flex justify-center items-center gap-2">
+                <button onclick="commitTitleUpdate('${paper.id}')" class="bg-emerald-600 text-white px-2.5 py-1.5 rounded hover:bg-emerald-700 text-xs font-bold">✓ Save</button>
+                <button onclick="purgeDocumentAsset('${paper.id}', '${paper.filename}')" class="bg-red-500 text-white px-2.5 py-1.5 rounded hover:bg-red-700 text-xs font-bold">✕ Delete</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
 }
 </script>
 </body>

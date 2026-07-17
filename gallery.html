@@ -204,11 +204,22 @@
             font-weight: 500;
             overflow: hidden;
         }
-       .gallery-img-wrapper img {
+      .gallery-img-wrapper {
+    width: 100%;
+    height: 200px;
+    background-color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Ensures image doesn't bleed out */
+    position: relative; /* Context for the image */
+}
+
+.gallery-img-wrapper img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    display: block; /* Add this line */
+    object-fit: cover; /* This is crucial: it crops the image to fill the 200px height without stretching */
+    display: block;
 }
         .gallery-info {
             padding: 15px;

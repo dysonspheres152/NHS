@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admissions & Procedures - Namboole High School</title>
+    <title>Admissions  - Namboole High School</title>
     
     <link rel="icon" type="image/jpeg" href="badge.jpeg">
 
@@ -500,8 +500,8 @@
         <nav>
             <a href="index.html">Home</a>
             <a href="admissions.html" class="active">Admissions</a>
-            <a href="co-curricular.html">Co-Curricular</a>
-            <a href="gallery.html">Gallery & Events</a>
+            <a href="co-curricular.html">Events</a>
+            <a href="gallery.html">Gallery</a>
             <a href="contact.html">Contact Us</a>
             <a href="constitution.html">Constitution</a>
             <a href="past-papers.html">Past Papers</a>
@@ -511,14 +511,14 @@
     <div class="container">
         
     <div class="hero">
-        <h2>Admissions & Digital Portals</h2>
+        <h2>Admissions Portals</h2>
         <p>Join our thriving academic family. Submit your details below through our unified applicant stream for students and educators.</p>
     </div>
 
     <div class="row">
         <div class="col-8">
             <div class="card accent">
-                <h3>Online Application & Portal Entry</h3>
+                <h3>Online Application  Portal Entry</h3>
                 <p style="font-size: 14px; margin-bottom: 20px; color: #64748b;">Please pick the appropriate processing channel below. Completing registration redirects you directly to the <strong>Verification Desk</strong> on the Past Papers framework page.</p>
                 
                 <div class="form-tabs">
@@ -673,7 +673,7 @@
     </div>
 
     <div class="portal-gate-lock">
-        <h3>🔐 Registrar & Administrator Gate</h3>
+        <h3>🔐  Administrator Gate</h3>
         <div class="login-grid-inputs">
             <div class="form-group" style="margin:0;">
                 <label>Admin Username</label>
@@ -683,16 +683,18 @@
                 <label>Security Keyphrase</label>
                 <input type="password" id="gate-pwd" class="form-control" placeholder="•••••">
             </div>
-            <button class="btn btn-black" onclick="challengeGateway()">Verify Authorization ➔</button>
+            <button class="btn btn-black" onclick="challengeGateway()">Enter Gate Way ➔</button>
         </div>
     </div>
 
     </div>
 
     <footer>
-        <p>&copy; 2026 Namboole High School. All Rights Reserved.</p>
-        <p>P.O. Box 12345, Kampala, Uganda | Tel: +256 414 111222 | Email: info@namboolehigh.sc.ug</p>
-    </footer>
+    <h3>Namboole High School</h3>
+    <p>&copy; 2026 Namboole High School. All Rights Reserved.</p>
+    <p>P.O. Box 27544,Kampala, Uganda</p>
+</footer>
+
 </div>
 
 <div id="admin-workspace-pane">
@@ -857,7 +859,7 @@
 
     function verifyAdminAction(pwdInputId) {
         const inputPass = document.getElementById(pwdInputId).value;
-        if (inputPass === "12345") {
+        if (inputPass === "Malcom") {
             return true;
         } else {
             alert("Authorization Denied: Invalid Security Password Key.");
@@ -945,7 +947,7 @@
         const uid = document.getElementById('gate-uid').value;
         const pwd = document.getElementById('gate-pwd').value;
 
-        if (uid === "Dyson J" && pwd === "12345") {
+        if (uid === "DOS" && pwd === "Malcom") {
             document.getElementById('school-main-portal-view').style.display = 'none';
             document.getElementById('admin-workspace-pane').style.display = 'block';
             fetchLiveApplications();
